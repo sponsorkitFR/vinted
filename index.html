@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prêt à Vendre</title>
+<meta name="theme-color" content="#20302A">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="icon" href="./icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#20302A;
+  --paper:#EDE8DC;
+  --paper-alt:#E1DAC7;
+  --white:#FFFDF8;
+  --mustard:#F2B705;
+  --mustard-dark:#C68F02;
+  --teal:#0E7C7B;
+  --teal-dark:#0A5F5E;
+  --clay:#C1440E;
+  --line:rgba(32,48,42,.16);
+  --shadow:0 2px 0 rgba(32,48,42,.9);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Work Sans',system-ui,sans-serif;
+  min-height:100vh;
+  padding-bottom:76px;
+  overscroll-behavior-y:none;
+}
+h1,h2,h3,.display{
+  font-family:'Archivo Black',system-ui,sans-serif;
+  font-weight:400;
+  letter-spacing:.01em;
+  text-transform:uppercase;
+}
+.mono{font-family:'IBM Plex Mono',monospace;}
+
+/* ---------- header ---------- */
+header.top{
+  padding:22px 18px 16px;
+  border-bottom:3px solid var(--ink);
+  background:var(--paper);
+  position:sticky; top:0; z-index:20;
+}
+header.top h1{font-size:22px; margin:0; line-height:1;}
+header.top p{margin:6px 0 0; font-size:13px; color:var(--ink); opacity:.65;}
+
+/* ---------- ticket perforation divider ---------- */
+.perf{
+  height:0;
+  border-top:2px dashed rgba(32,48,42,.35);
+  position:relative;
+  margin:22px 0;
+}
+.perf::before,.perf::after{
+  content:"";
+  position:absolute; top:-9px;
+  width:18px; height:18px; border-radius:50%;
+  background:var(--paper);
+  border:2px solid var(--ink);
+}
+.perf::before{left:-27px;}
+.perf::after{right:-27px;}
+
+/* ---------- views ---------- */
+main{padding:18px; max-width:640px; margin:0 auto;}
+.view{display:none;}
+.view.active{display:block;}
+
+/* ---------- tag-style upload zone ---------- */
+.dropzone{
+  border:2px dashed var(--ink);
+  border-radius:4px;
+  background:var(--white);
+  padding:26px 16px;
+  text-align:center;
+  position:relative;
+}
+.dropzone .hole{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--ink); background:var(--paper);
+  position:absolute; top:12px; left:14px;
+}
+.dropzone strong{display:block; font-size:15px; margin-bottom:4px;}
+.dropzone span{font-size:12.5px; opacity:.6;}
+.dropzone input{display:none;}
+
+.thumbs{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+.thumb{
+  width:76px;height:76px; border-radius:4px; overflow:hidden;
+  border:2px solid var(--ink); position:relative; background:var(--white);
+}
+.thumb img{width:100%;height:100%;object-fit:cover; display:block;}
+.thumb button{
+  position:absolute; top:-6px; right:-6px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--clay); color:#fff; border:2px solid var(--paper);
+  font-size:12px; line-height:1; cursor:pointer; font-weight:700;
+}
+.thumb-add{
+  width:76px;height:76px; border-radius:4px;
+  border:2px dashed var(--ink); background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px; color:var(--ink); opacity:.55; cursor:pointer;
+}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; padding:15px 16px; margin-top:14px;
+  font-family:'Archivo Black',sans-serif; font-size:14px; letter-spacing:.02em;
+  text-transform:uppercase; text-align:center;
+  border-radius:4px; border:2px solid var(--ink);
+  cursor:pointer; box-shadow:var(--shadow);
+  transition:transform .05s ease;
+}
+.btn:active{transform:translate(2px,2px); box-shadow:0 0 0 rgba(0,0,0,0);}
+.btn.primary{background:var(--mustard); color:var(--ink);}
+.btn.primary:disabled{opacity:.45; cursor:not-allowed;}
+.btn.teal{background:var(--teal); color:#fff;}
+.btn.ghost{background:var(--white); color:var(--ink);}
+.btn.danger{background:var(--white); color:var(--clay); border-color:var(--clay);}
+.btn.small{padding:10px 12px; font-size:12px; margin-top:0;}
+
+/* ---------- fields ---------- */
+.field{margin-top:16px;}
+.field label{
+  display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em;
+  opacity:.6; margin-bottom:6px; font-weight:600;
+}
+.field input, .field textarea, .field select{
+  width:100%; padding:12px 13px; border:2px solid var(--ink); border-radius:4px;
+  background:var(--white); color:var(--ink); font-family:inherit; font-size:14.5px;
+}
+.field textarea{min-height:120px; resize:vertical; line-height:1.5;}
+.field .hint{font-size:11.5px; opacity:.55; margin-top:5px;}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.price-tag{
+  display:inline-flex; align-items:baseline; gap:4px;
+  background:var(--mustard); border:2px solid var(--ink); border-radius:4px;
+  padding:8px 12px; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:18px;
+}
+.tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
+.tag-pill{
+  background:var(--paper-alt); border:1.5px solid var(--ink); border-radius:20px;
+  padding:5px 11px; font-size:12.5px; font-family:'IBM Plex Mono',monospace;
+}
+
+/* ---------- status / empty states ---------- */
+.status{
+  margin-top:16px; padding:12px 14px; border-radius:4px; font-size:13px;
+  border:2px solid var(--ink); background:var(--white); display:flex; gap:10px; align-items:flex-start;
+}
+.status.error{border-color:var(--clay); color:var(--clay);}
+.spinner{
+  width:16px;height:16px; border-radius:50%; flex:0 0 auto; margin-top:2px;
+  border:3px solid var(--ink); border-top-color:transparent;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty{
+  text-align:center; padding:50px 20px; opacity:.6; font-size:13.5px;
+}
+
+/* ---------- history cards ---------- */
+.card{
+  display:flex; gap:12px; background:var(--white); border:2px solid var(--ink);
+  border-radius:4px; padding:12px; margin-bottom:12px;
+}
+.card img{width:64px;height:64px;object-fit:cover;border-radius:3px; border:1.5px solid var(--ink); flex:0 0 auto;}
+.card .body{flex:1; min-width:0;}
+.card .body h3{font-size:13.5px; margin:0 0 4px; text-transform:none; font-family:'Work Sans'; font-weight:700;}
+.card .body p{margin:0; font-size:12px; opacity:.6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.card .actions{display:flex; gap:6px; margin-top:8px;}
+
+/* ---------- bottom nav ---------- */
+nav.bottom{
+  position:fixed; bottom:0; left:0; right:0; z-index:30;
+  display:flex; background:var(--ink); border-top:3px solid var(--ink);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+nav.bottom button{
+  flex:1; background:none; border:none; color:var(--paper); opacity:.55;
+  padding:12px 4px 10px; font-family:'Archivo Black',sans-serif; font-size:10.5px;
+  letter-spacing:.03em; text-transform:uppercase; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+}
+nav.bottom button.active{opacity:1; color:var(--mustard);}
+nav.bottom svg{width:20px;height:20px;}
+
+/* toast */
+#toast{
+  position:fixed; left:50%; bottom:86px; transform:translateX(-50%) translateY(20px);
+  background:var(--ink); color:var(--paper); padding:10px 16px; border-radius:4px;
+  font-size:13px; opacity:0; pointer-events:none; transition:all .25s ease; z-index:50;
+  border:2px solid var(--mustard);
+}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+a{color:var(--teal-dark);}
+
+/* ---------- onboarding overlay ---------- */
+.onboard-overlay{
+  position:fixed; inset:0; z-index:100; background:rgba(32,48,42,.55);
+  display:flex; align-items:flex-end; justify-content:center;
+  padding:0; opacity:0; pointer-events:none; transition:opacity .2s ease;
+}
+.onboard-overlay.show{opacity:1; pointer-events:auto;}
+.onboard-card{
+  background:var(--paper); width:100%; max-width:640px;
+  border-top:3px solid var(--ink); border-radius:16px 16px 0 0;
+  padding:26px 22px calc(26px + env(safe-area-inset-bottom));
+  max-height:88vh; overflow-y:auto;
+  transform:translateY(100%); transition:transform .28s ease;
+}
+.onboard-overlay.show .onboard-card{transform:translateY(0);}
+.onboard-dots{display:flex; gap:6px; justify-content:center; margin-bottom:18px;}
+.onboard-dots .dot{width:7px; height:7px; border-radius:50%; background:var(--ink); opacity:.2;}
+.onboard-dots .dot.active{opacity:1; background:var(--mustard-dark);}
+.onboard-slide{display:none;}
+.onboard-slide.active{display:block;}
+.onboard-tag{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--teal-dark); font-weight:600; margin-bottom:6px;
+}
+.onboard-slide h2{font-size:21px; margin:0 0 10px;}
+.onboard-slide p{font-size:14px; line-height:1.55; margin:0 0 10px;}
+.onboard-steps{margin:12px 0; padding-left:20px; font-size:13.5px; line-height:1.6;}
+.onboard-steps li{margin-bottom:6px;}
+.onboard-steps.numbered{list-style:decimal;}
+.onboard-card .btn{margin-top:16px;}
+.onboard-card a.btn{display:flex;}
+
+</style>
+</head>
+<body>
+
+<div id="onboard" class="onboard-overlay">
+  <div class="onboard-card">
+    <div class="onboard-dots">
+      <span class="dot active" data-slide="0"></span>
+      <span class="dot" data-slide="1"></span>
+      <span class="dot" data-slide="2"></span>
+    </div>
+
+    <!-- Slide 0 : bienvenue -->
+    <div class="onboard-slide active" data-slide="0">
+      <div class="onboard-tag">👋 Bienvenue</div>
+      <h2>Prêt à Vendre</h2>
+      <p>Photographie ton article, l'IA rédige la fiche complète, tu vérifies, tu publies sur Vinted en un geste.</p>
+      <p class="hint">Cette appli tourne entièrement sur ton téléphone : aucune donnée n'est envoyée sur un serveur, à part les photos vers l'IA le temps de l'analyse.</p>
+      <button class="btn primary" data-next>C'est parti</button>
+    </div>
+
+    <!-- Slide 1 : clé API -->
+    <div class="onboard-slide" data-slide="1">
+      <div class="onboard-tag">🔑 Étape 1 sur 2</div>
+      <h2>Ta clé Gemini gratuite</h2>
+      <p>Chaque personne qui utilise l'appli doit avoir sa propre clé, gratuite, en 2 minutes :</p>
+      <ol class="onboard-steps">
+        <li>Ouvre <strong>aistudio.google.com/apikey</strong> avec ton compte Google</li>
+        <li>Clique sur <strong>Create API key</strong></li>
+        <li>Copie la clé (elle commence par <span class="mono">AIza...</span>)</li>
+        <li>Colle-la juste ici 👇</li>
+      </ol>
+      <a class="btn ghost" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Ouvrir aistudio.google.com/apikey</a>
+      <div class="field">
+        <label>Ta clé API Gemini</label>
+        <input type="password" id="onboardApiKey" placeholder="AIza...">
+        <div class="hint">Elle reste stockée uniquement sur ce téléphone. Tu peux aussi la coller plus tard depuis l'onglet Réglages.</div>
+      </div>
+      <button class="btn primary" data-next>Continuer</button>
+    </div>
+
+    <!-- Slide 2 : tutoriel -->
+    <div class="onboard-slide" data-slide="2">
+      <div class="onboard-tag">📸 Étape 2 sur 2</div>
+      <h2>Comment ça marche</h2>
+      <ol class="onboard-steps numbered">
+        <li><strong>Photographie</strong> ton article dans l'onglet Nouveau (plusieurs angles = meilleure fiche).</li>
+        <li><strong>Génère la fiche</strong> : titre, description, catégorie, prix et tags arrivent en quelques secondes.</li>
+        <li><strong>Vérifie et corrige</strong> — l'IA peut se tromper sur la marque, l'état ou un défaut, relis toujours avant de publier.</li>
+        <li><strong>Importe dans Vinted</strong> : copier-coller classique, ou l'auto-remplissage ⚡ (favori à installer une fois, dans Réglages) pour remplir titre/description/prix en un tap.</li>
+        <li>Ajoute tes photos et <strong>publie toi-même</strong> — ce dernier geste reste toujours manuel.</li>
+      </ol>
+      <button class="btn primary" id="onboardFinish">Terminer</button>
+    </div>
+  </div>
+</div>
+
+<header class="top">
+  <h1>Prêt à Vendre</h1>
+  <p id="subtitle">Photo → fiche IA → publication Vinted</p>
+</header>
+
+<main>
+
+  <!-- ===================== NOUVELLE ANNONCE ===================== -->
+  <section class="view active" id="view-new">
+
+    <label class="dropzone" id="dropzone">
+      <div class="hole"></div>
+      <strong>Ajoute tes photos</strong>
+      <span>Appuie pour prendre une photo ou choisir dans ta galerie</span>
+      <input type="file" id="fileInput" accept="image/*" multiple>
+    </label>
+
+    <div class="thumbs" id="thumbs"></div>
+
+    <button class="btn primary" id="analyzeBtn" disabled>Générer la fiche avec l'IA</button>
+    <div id="analyzeStatus"></div>
+
+    <div class="perf" id="resultDivider" style="display:none;"></div>
+
+    <div id="resultBlock" style="display:none;">
+      <div class="field">
+        <label>Titre</label>
+        <input type="text" id="f-title">
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Catégorie</label>
+          <input type="text" id="f-category">
+        </div>
+        <div class="field">
+          <label>Marque</label>
+          <input type="text" id="f-brand">
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Taille</label>
+          <input type="text" id="f-size">
+        </div>
+        <div class="field">
+          <label>État</label>
+          <select id="f-condition">
+            <option>Neuf avec étiquette</option>
+            <option>Neuf sans étiquette</option>
+            <option>Très bon état</option>
+            <option>Bon état</option>
+            <option>Satisfaisant</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Description</label>
+        <textarea id="f-description"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Prix conseillé</label>
+        <div class="price-tag">€<span id="f-price" contenteditable="true">0</span></div>
+        <div class="hint">Estimation approximative par l'IA — ajuste selon l'état réel et les prix Vinted du moment.</div>
+      </div>
+
+      <div class="field">
+        <label>Tags suggérés</label>
+        <div class="tags" id="f-tags"></div>
+      </div>
+
+      <div class="perf"></div>
+
+      <button class="btn primary" id="autofillBtn">Copier pour auto-remplissage ⚡</button>
+      <div class="hint" style="margin-top:6px;">Puis va sur Vinted → nouvelle annonce → appuie sur ton favori « Auto-remplir » (à installer une fois, voir Réglages).</div>
+      <button class="btn teal" id="copyBtn">Copier la fiche en texte</button>
+      <button class="btn ghost" id="openVintedBtn">Ouvrir Vinted pour publier</button>
+      <button class="btn ghost" id="saveDraftBtn">Enregistrer dans l'historique</button>
+      <button class="btn ghost" id="regenBtn">Régénérer</button>
+    </div>
+
+  </section>
+
+  <!-- ===================== HISTORIQUE ===================== -->
+  <section class="view" id="view-history">
+    <h2 style="font-size:16px;">Historique</h2>
+    <div id="historyList"></div>
+  </section>
+
+  <!-- ===================== RÉGLAGES ===================== -->
+  <section class="view" id="view-settings">
+    <h2 style="font-size:16px;">Réglages</h2>
+
+    <div class="field">
+      <label>Clé API Gemini</label>
+      <input type="password" id="apiKeyInput" placeholder="AIza...">
+      <div class="hint">
+        Gratuite sur <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>.
+        Elle reste stockée uniquement sur ton téléphone, jamais envoyée ailleurs qu'à Google.
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Modèle</label>
+      <select id="modelSelect">
+        <option value="gemini-2.5-flash">Gemini 2.5 Flash (recommandé, gratuit)</option>
+        <option value="gemini-2.0-flash">Gemini 2.0 Flash (gratuit)</option>
+        <option value="gemini-2.0-flash-lite">Gemini 2.0 Flash-Lite (plus rapide, gratuit)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Ton de la description</label>
+      <select id="toneSelect">
+        <option value="clair et efficace, orienté vente rapide">Clair et efficace</option>
+        <option value="chaleureux et détaillé, met en avant la qualité">Chaleureux et détaillé</option>
+        <option value="direct et minimaliste, quelques mots clés">Minimaliste</option>
+      </select>
+    </div>
+
+    <button class="btn primary" id="saveSettingsBtn">Enregistrer</button>
+    <button class="btn ghost" id="reopenOnboardBtn">Revoir le tutoriel</button>
+
+    <div class="perf"></div>
+
+    <button class="btn danger" id="clearAllBtn">Effacer toutes mes données locales</button>
+
+    <div class="perf"></div>
+
+    <h2 style="font-size:16px;">Auto-remplissage Vinted ⚡ (bêta)</h2>
+    <div class="hint">
+      Un favori de navigateur qui remplit tout seul le titre, la description et le prix sur la page « nouvelle annonce » de Vinted.
+      Toi seul ajoutes les photos et cliques sur Publier — ça reste plus rapide qu'un copier-coller manuel mais moins risqué qu'une publication 100% automatique.
+      Comme Vinted peut changer son site à tout moment, ce script peut cesser de fonctionner un jour : le copier-coller classique reste toujours disponible en secours.
+    </div>
+
+    <div class="field">
+      <label>1. Copie ce code</label>
+      <textarea id="bookmarkletCode" readonly style="min-height:70px; font-family:'IBM Plex Mono',monospace; font-size:11px;"></textarea>
+      <button class="btn small ghost" id="copyBookmarkletBtn" style="margin-top:8px; width:100%;">Copier le code</button>
+    </div>
+
+    <div class="field">
+      <label>2. Installe-le une seule fois</label>
+      <div class="hint">
+        <strong>Sur iPhone (Safari) :</strong> ouvre n'importe quelle page → partage → « Ajouter aux favoris ». Puis modifie ce favori (dans tes favoris, appui long → Modifier) : renomme-le « Auto-remplir Vinted » et colle le code copié à la place de l'adresse.<br><br>
+        <strong>Sur Android (Chrome) :</strong> ouvre le menu ⋮ → Favoris → Ajouter. Puis modifie ce favori (⋮ à côté du favori → Modifier), renomme-le « Auto-remplir Vinted » et colle le code copié à la place de l'URL.
+      </div>
+    </div>
+
+    <div class="field">
+      <label>3. À chaque annonce</label>
+      <div class="hint">
+        Dans l'onglet Nouveau, appuie sur <strong>« Copier pour auto-remplissage »</strong> → va sur Vinted, page nouvelle annonce → ouvre tes favoris → tape sur <strong>« Auto-remplir Vinted »</strong>. Les champs se remplissent, tu vérifies, tu ajoutes les photos, tu publies.
+      </div>
+    </div>
+    <div class="hint" style="margin-top:16px;">
+      Tout est 100% gratuit et fonctionne sans serveur : les photos ne quittent ton téléphone que pour être analysées par l'API Gemini (gratuite), rien n'est stocké ailleurs que dans ce téléphone.
+    </div>
+  </section>
+
+</main>
+
+<div id="toast"></div>
+
+<nav class="bottom">
+  <button class="tab active" data-view="view-new">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+    Nouveau
+  </button>
+  <button class="tab" data-view="view-history">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    Historique
+  </button>
+  <button class="tab" data-view="view-settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.9 2.9l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.9-2.9l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.6-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.9-2.9l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.6V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.9 2.9l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.6 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+    Réglages
+  </button>
+</nav>
+
+<script>
+// ---------- state ----------
+const state = { photos: [] }; // {dataUrl, base64, mime}
+let lastResult = null;
+
+const $ = (id) => document.getElementById(id);
+
+// ---------- storage helpers ----------
+const store = {
+  get(key, fallback){ try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e){ return fallback; } },
+  set(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+};
+
+function toast(msg){
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+// ---------- tabs ----------
+document.querySelectorAll('nav.bottom .tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.bottom .tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    $(btn.dataset.view).classList.add('active');
+    if(btn.dataset.view === 'view-history') renderHistory();
+  });
+});
+
+// ---------- settings load/save ----------
+function loadSettings(){
+  $('apiKeyInput').value = store.get('apiKey', '');
+  $('modelSelect').value = store.get('model', 'gemini-2.5-flash');
+  $('toneSelect').value = store.get('tone', 'clair et efficace, orienté vente rapide');
+}
+loadSettings();
+
+$('saveSettingsBtn').addEventListener('click', ()=>{
+  store.set('apiKey', $('apiKeyInput').value.trim());
+  store.set('model', $('modelSelect').value);
+  store.set('tone', $('toneSelect').value);
+  toast('Réglages enregistrés');
+});
+
+$('clearAllBtn').addEventListener('click', ()=>{
+  if(confirm('Effacer la clé API, l\'historique et tous les réglages sur cet appareil ?')){
+    localStorage.clear();
+    loadSettings();
+    renderHistory();
+    toast('Données effacées');
+  }
+});
+
+// ---------- onboarding ----------
+const onboard = $('onboard');
+let onboardSlide = 0;
+const totalSlides = document.querySelectorAll('.onboard-slide').length;
+
+function showOnboardSlide(i){
+  onboardSlide = i;
+  document.querySelectorAll('.onboard-slide').forEach(s=>s.classList.toggle('active', Number(s.dataset.slide) === i));
+  document.querySelectorAll('.onboard-dots .dot').forEach(d=>d.classList.toggle('active', Number(d.dataset.slide) === i));
+}
+
+function openOnboard(){
+  showOnboardSlide(0);
+  $('onboardApiKey').value = store.get('apiKey', '');
+  onboard.classList.add('show');
+}
+
+function closeOnboard(){
+  onboard.classList.remove('show');
+}
+
+document.querySelectorAll('.onboard-slide [data-next]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    // sauvegarde la clé si on quitte l'étape 1
+    if(onboardSlide === 1){
+      const key = $('onboardApiKey').value.trim();
+      if(key){ store.set('apiKey', key); loadSettings(); }
+    }
+    if(onboardSlide < totalSlides - 1) showOnboardSlide(onboardSlide + 1);
+  });
+});
+
+$('onboardFinish').addEventListener('click', ()=>{
+  const key = $('onboardApiKey').value.trim();
+  if(key){ store.set('apiKey', key); loadSettings(); }
+  store.set('onboarded', true);
+  closeOnboard();
+});
+
+$('reopenOnboardBtn').addEventListener('click', openOnboard);
+
+if(!store.get('onboarded', false)){
+  openOnboard();
+}
+
+// ---------- photo capture ----------
+$('dropzone').addEventListener('click', (e)=>{ /* label triggers input natively */ });
+$('fileInput').addEventListener('change', async (e)=>{
+  const files = Array.from(e.target.files || []);
+  for(const file of files){
+    const resized = await resizeImage(file, 1280);
+    state.photos.push(resized);
+  }
+  e.target.value = '';
+  renderThumbs();
+});
+
+function resizeImage(file, maxDim){
+  return new Promise((resolve)=>{
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      img.onload = ()=>{
+        let { width, height } = img;
+        if(width > height && width > maxDim){ height = height * (maxDim/width); width = maxDim; }
+        else if(height > maxDim){ width = width * (maxDim/height); height = maxDim; }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+        resolve({
+          dataUrl,
+          base64: dataUrl.split(',')[1],
+          mime: 'image/jpeg'
+        });
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderThumbs(){
+  const wrap = $('thumbs');
+  wrap.innerHTML = '';
+  state.photos.forEach((p, i)=>{
+    const div = document.createElement('div');
+    div.className = 'thumb';
+    div.innerHTML = `<img src="${p.dataUrl}"><button data-i="${i}">×</button>`;
+    wrap.appendChild(div);
+  });
+  if(state.photos.length){
+    const add = document.createElement('label');
+    add.className = 'thumb-add';
+    add.textContent = '+';
+    add.innerHTML += `<input type="file" accept="image/*" multiple style="display:none">`;
+    add.querySelector('input').addEventListener('change', async (e)=>{
+      const files = Array.from(e.target.files || []);
+      for(const file of files){ state.photos.push(await resizeImage(file, 1280)); }
+      renderThumbs();
+    });
+    wrap.appendChild(add);
+  }
+  wrap.querySelectorAll('button[data-i]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      state.photos.splice(Number(b.dataset.i), 1);
+      renderThumbs();
+    });
+  });
+  $('analyzeBtn').disabled = state.photos.length === 0;
+}
+
+// ---------- Gemini call ----------
+const PROMPT = (tone) => `Tu es un expert en petites annonces sur Vinted en France. Analyse les photos d'un article à vendre et réponds UNIQUEMENT avec un objet JSON valide, sans texte autour, sans balises markdown, au format exact suivant :
+{
+  "title": "titre accrocheur, 60 caractères max, en français",
+  "category": "catégorie précise (ex: Vêtements femme > Robes)",
+  "brand": "marque si visible ou déductible, sinon chaîne vide",
+  "size": "taille si visible ou déductible, sinon chaîne vide",
+  "condition": "une valeur parmi: Neuf avec étiquette, Neuf sans étiquette, Très bon état, Bon état, Satisfaisant",
+  "color": "couleur principale",
+  "material": "matière si identifiable, sinon chaîne vide",
+  "description": "description complète et vendeuse de 3 à 6 phrases en français, ton ${tone}, mentionne l'état, les défauts visibles éventuels, les mesures si déductibles, sans jamais inventer une marque ou un défaut que tu ne vois pas",
+  "suggested_price_eur": nombre entier réaliste pour le marché Vinted français d'occasion,
+  "hashtags": ["5 à 8 mots-clés pertinents sans le symbole #"]
+}
+Sois honnête : si tu ne peux pas déterminer un champ avec confiance, laisse une chaîne vide plutôt que d'inventer.`;
+
+async function callGemini(){
+  const apiKey = store.get('apiKey', '');
+  if(!apiKey){
+    showStatus('error', 'Ajoute d\'abord ta clé API Gemini dans Réglages.');
+    document.querySelector('[data-view="view-settings"]').click();
+    return;
+  }
+  const model = store.get('model', 'gemini-2.5-flash');
+  const tone = store.get('tone', 'clair et efficace, orienté vente rapide');
+
+  showStatus('loading', 'Analyse des photos en cours…');
+  $('analyzeBtn').disabled = true;
+
+  const parts = [{ text: PROMPT(tone) }];
+  state.photos.forEach(p => parts.push({ inline_data: { mime_type: p.mime, data: p.base64 } }));
+
+  try{
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts }],
+        generationConfig: { temperature: 0.6, response_mime_type: 'application/json' }
+      })
+    });
+
+    if(!res.ok){
+      const errText = await res.text();
+      throw new Error(`Erreur API (${res.status}) : ${errText.slice(0,200)}`);
+    }
+
+    const data = await res.json();
+    const raw = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join('') || '';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const json = JSON.parse(clean);
+
+    fillResult(json);
+    showStatus('ok', 'Fiche générée ✓');
+  }catch(err){
+    console.error(err);
+    showStatus('error', 'Échec de la génération : ' + err.message);
+  }finally{
+    $('analyzeBtn').disabled = state.photos.length === 0;
+  }
+}
+
+function showStatus(type, msg){
+  const el = $('analyzeStatus');
+  if(type === 'loading'){
+    el.innerHTML = `<div class="status"><div class="spinner"></div><div>${msg}</div></div>`;
+  }else if(type === 'error'){
+    el.innerHTML = `<div class="status error">⚠️ ${msg}</div>`;
+  }else if(type === 'ok'){
+    el.innerHTML = '';
+  }else{
+    el.innerHTML = '';
+  }
+}
+
+function fillResult(json){
+  lastResult = json;
+  $('f-title').value = json.title || '';
+  $('f-category').value = json.category || '';
+  $('f-brand').value = json.brand || '';
+  $('f-size').value = json.size || '';
+  $('f-condition').value = json.condition || 'Bon état';
+  $('f-description').value = json.description || '';
+  $('f-price').textContent = json.suggested_price_eur ?? 0;
+  const tagsWrap = $('f-tags');
+  tagsWrap.innerHTML = '';
+  (json.hashtags || []).forEach(t=>{
+    const span = document.createElement('span');
+    span.className = 'tag-pill';
+    span.textContent = '#' + t.replace(/^#/, '');
+    tagsWrap.appendChild(span);
+  });
+  $('resultBlock').style.display = 'block';
+  $('resultDivider').style.display = 'block';
+  $('resultBlock').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+$('analyzeBtn').addEventListener('click', callGemini);
+$('regenBtn').addEventListener('click', callGemini);
+
+// ---------- copy / export ----------
+function buildListingText(){
+  const tags = Array.from($('f-tags').children).map(t=>t.textContent).join(' ');
+  return `${$('f-title').value}
+
+${$('f-description').value}
+
+Catégorie : ${$('f-category').value}
+Marque : ${$('f-brand').value || '—'}
+Taille : ${$('f-size').value || '—'}
+État : ${$('f-condition').value}
+Prix : ${$('f-price').textContent} €
+
+${tags}`;
+}
+
+$('copyBtn').addEventListener('click', async ()=>{
+  await navigator.clipboard.writeText(buildListingText());
+  toast('Fiche copiée — colle-la dans Vinted');
+});
+
+// ---------- auto-remplissage (bookmarklet) ----------
+const AUTOFILL_MARKER = '##VINTEDAI##';
+
+$('autofillBtn').addEventListener('click', async ()=>{
+  const payload = {
+    title: $('f-title').value,
+    description: $('f-description').value,
+    price: $('f-price').textContent.trim(),
+    brand: $('f-brand').value,
+    size: $('f-size').value
+  };
+  const text = AUTOFILL_MARKER + JSON.stringify(payload);
+  try{
+    await navigator.clipboard.writeText(text);
+    toast('Copié ⚡ — va sur Vinted et tape ton favori "Auto-remplir Vinted"');
+  }catch(e){
+    toast('Impossible de copier automatiquement, utilise "Copier la fiche en texte".');
+  }
+});
+
+// Code source lisible du bookmarklet (celui qui tourne sur la page Vinted)
+const BOOKMARKLET_SOURCE = `
+(async function(){
+  var MARK = '${AUTOFILL_MARKER}';
+  var text;
+  try { text = await navigator.clipboard.readText(); }
+  catch(e){ alert('Autorise l\\'accès au presse-papier pour ce site, puis retape sur le favori.'); return; }
+  var idx = text.indexOf(MARK);
+  if(idx === -1){ alert('Presse-papier non reconnu. Retourne dans Prêt à Vendre et appuie sur "Copier pour auto-remplissage" avant de revenir ici.'); return; }
+  var data;
+  try { data = JSON.parse(text.slice(idx + MARK.length)); }
+  catch(e){ alert('Données illisibles dans le presse-papier.'); return; }
+
+  function setNativeValue(el, value){
+    var proto = Object.getPrototypeOf(el);
+    var desc = Object.getOwnPropertyDescriptor(proto, 'value');
+    if(desc && desc.set){ desc.set.call(el, value); } else { el.value = value; }
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+    el.dispatchEvent(new Event('blur', { bubbles: true }));
+  }
+
+  function findField(keywords){
+    var els = Array.prototype.slice.call(document.querySelectorAll('input, textarea'));
+    for(var i=0;i<els.length;i++){
+      var el = els[i];
+      var hay = [el.name, el.id, el.placeholder, el.getAttribute('aria-label'), el.getAttribute('data-testid')].join(' ').toLowerCase();
+      for(var k=0;k<keywords.length;k++){ if(hay.indexOf(keywords[k]) !== -1) return el; }
+      var lab = el.closest ? el.closest('label') : null;
+      if(!lab && el.id){ lab = document.querySelector('label[for="' + el.id + '"]'); }
+      if(lab){
+        var lt = lab.textContent.toLowerCase();
+        for(var k2=0;k2<keywords.length;k2++){ if(lt.indexOf(keywords[k2]) !== -1) return el; }
+      }
+    }
+    return null;
+  }
+
+  var filled = 0;
+  var titleEl = findField(['title','titre']);
+  if(titleEl){ setNativeValue(titleEl, data.title); filled++; }
+
+  var descEl = findField(['description']);
+  if(descEl){ setNativeValue(descEl, data.description); filled++; }
+
+  var priceEl = findField(['price','prix']);
+  if(priceEl){ setNativeValue(priceEl, String(data.price)); filled++; }
+
+  alert(filled + ' champ(s) sur 3 rempli(s). Vérifie les infos, ajoute tes photos, puis publie toi-même.');
+})();
+`.trim();
+
+$('bookmarkletCode').value = 'javascript:' + encodeURIComponent(BOOKMARKLET_SOURCE);
+
+$('copyBookmarkletBtn').addEventListener('click', async ()=>{
+  await navigator.clipboard.writeText($('bookmarkletCode').value);
+  toast('Code copié — colle-le dans l\'URL de ton favori');
+});
+
+$('openVintedBtn').addEventListener('click', async ()=>{
+  await navigator.clipboard.writeText(buildListingText());
+  toast('Fiche copiée, ouverture de Vinted…');
+  setTimeout(()=>{ window.open('https://www.vinted.fr/items/new', '_blank'); }, 400);
+});
+
+$('saveDraftBtn').addEventListener('click', ()=>{
+  const listings = store.get('listings', []);
+  listings.unshift({
+    id: Date.now(),
+    thumb: state.photos[0]?.dataUrl || '',
+    title: $('f-title').value,
+    category: $('f-category').value,
+    brand: $('f-brand').value,
+    size: $('f-size').value,
+    condition: $('f-condition').value,
+    description: $('f-description').value,
+    price: $('f-price').textContent,
+    tags: Array.from($('f-tags').children).map(t=>t.textContent)
+  });
+  store.set('listings', listings.slice(0, 100));
+  toast('Ajouté à l\'historique');
+});
+
+// ---------- history ----------
+function renderHistory(){
+  const listings = store.get('listings', []);
+  const wrap = $('historyList');
+  if(!listings.length){
+    wrap.innerHTML = '<div class="empty">Aucune annonce enregistrée pour l\'instant.<br>Génère une fiche puis appuie sur « Enregistrer dans l\'historique ».</div>';
+    return;
+  }
+  wrap.innerHTML = '';
+  listings.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${item.thumb}" onerror="this.style.display='none'">
+      <div class="body">
+        <h3>${item.title || '(sans titre)'}</h3>
+        <p>${item.category || ''} · ${item.price || 0} €</p>
+        <div class="actions">
+          <button class="btn small ghost" data-act="copy">Copier</button>
+          <button class="btn small danger" data-act="delete">Supprimer</button>
+        </div>
+      </div>`;
+    card.querySelector('[data-act="copy"]').addEventListener('click', async ()=>{
+      const text = `${item.title}\n\n${item.description}\n\nCatégorie : ${item.category}\nMarque : ${item.brand || '—'}\nTaille : ${item.size || '—'}\nÉtat : ${item.condition}\nPrix : ${item.price} €\n\n${(item.tags||[]).join(' ')}`;
+      await navigator.clipboard.writeText(text);
+      toast('Fiche copiée');
+    });
+    card.querySelector('[data-act="delete"]').addEventListener('click', ()=>{
+      const remaining = store.get('listings', []).filter(l=>l.id !== item.id);
+      store.set('listings', remaining);
+      renderHistory();
+    });
+    wrap.appendChild(card);
+  });
+}
+
+// ---------- service worker ----------
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
