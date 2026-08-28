@@ -1063,57 +1063,9 @@ $('autofillBtn').addEventListener('click', async ()=>{
   }
 });
 
-// Code source lisible du bookmarklet (celui qui tourne sur la page Vinted)
-const BOOKMARKLET_SOURCE = `
-(async function(){
-  var MARK = '${AUTOFILL_MARKER}';
-  var text;
-  try { text = await navigator.clipboard.readText(); }
-  catch(e){ alert('Autorise l\\'accès au presse-papier pour ce site, puis retape sur le favori.'); return; }
-  var idx = text.indexOf(MARK);
-  if(idx === -1){ alert('Presse-papier non reconnu. Retourne dans Prêt à Vendre et appuie sur "Copier pour auto-remplissage" avant de revenir ici.'); return; }
-  var data;
-  try { data = JSON.parse(text.slice(idx + MARK.length)); }
-  catch(e){ alert('Données illisibles dans le presse-papier.'); return; }
-
-  function setNativeValue(el, value){
-    var proto = Object.getPrototypeOf(el);
-    var desc = Object.getOwnPropertyDescriptor(proto, 'value');
-    if(desc && desc.set){ desc.set.call(el, value); } else { el.value = value; }
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-    el.dispatchEvent(new Event('change', { bubbles: true }));
-    el.dispatchEvent(new Event('blur', { bubbles: true }));
-  }
-
-  function findField(keywords){
-    var els = Array.prototype.slice.call(document.querySelectorAll('input, textarea'));
-    for(var i=0;i<els.length;i++){
-      var el = els[i];
-      var hay = [el.name, el.id, el.placeholder, el.getAttribute('aria-label'), el.getAttribute('data-testid')].join(' ').toLowerCase();
-      for(var k=0;k<keywords.length;k++){ if(hay.indexOf(keywords[k]) !== -1) return el; }
-      var lab = el.closest ? el.closest('label') : null;
-      if(!lab && el.id){ lab = document.querySelector('label[for="' + el.id + '"]'); }
-      if(lab){
-        var lt = lab.textContent.toLowerCase();
-        for(var k2=0;k2<keywords.length;k2++){ if(lt.indexOf(keywords[k2]) !== -1) return el; }
-      }
-    }
-    return null;
-  }
-
-  var filled = 0;
-  var titleEl = findField(['title','titre']);
-  if(titleEl){ setNativeValue(titleEl, data.title); filled++; }
-
-  var descEl = findField(['description']);
-  if(descEl){ setNativeValue(descEl, data.description); filled++; }
-
-  var priceEl = findField(['price','prix']);
-  if(priceEl){ setNativeValue(priceEl, String(data.price)); filled++; }
-
-  alert(filled + ' champ(s) sur 3 rempli(s). Vérifie les infos, ajoute tes photos, puis publie toi-même.');
-})();
-`.trim();
+// Code source du bookmarklet minifié (celui qui tourne sur la page Vinted)
+// Version compacte pour rester sous la limite ~2000 caractères des favoris Android.
+const BOOKMARKLET_SOURCE = `!async function(){var e,t="${AUTOFILL_MARKER}";try{e=await navigator.clipboard.readText()}catch(e){return void alert("Autorise l'acces au presse-papier pour ce site, puis retape sur le favori.")}var r=e.indexOf(t);if(-1!==r){var i;try{i=JSON.parse(e.slice(r+t.length))}catch(e){return void alert("Donnees illisibles.")}var a=0,l=c(["title","titre"]);l&&(s(l,i.title),a++);var n=c(["description"]);n&&(s(n,i.description),a++);var o=c(["price","prix"]);o&&(s(o,String(i.price)),a++),alert(a+"/3 champs remplis. Verifie, ajoute tes photos, publie toi-meme.")}else alert("Presse-papier non reconnu. Utilise d'abord le bouton Copier pour auto-remplissage dans l'appli.");function s(e,t){var r=Object.getPrototypeOf(e),i=Object.getOwnPropertyDescriptor(r,"value");i&&i.set?i.set.call(e,t):e.value=t,e.dispatchEvent(new Event("input",{bubbles:!0})),e.dispatchEvent(new Event("change",{bubbles:!0}))}function c(e){for(var t=Array.prototype.slice.call(document.querySelectorAll("input, textarea")),r=0;r<t.length;r++){for(var i=t[r],a=[i.name,i.id,i.placeholder,i.getAttribute("aria-label")].join(" ").toLowerCase(),l=0;l<e.length;l++)if(-1!==a.indexOf(e[l]))return i;var n=i.closest?i.closest("label"):i.id?document.querySelector('label[for="'+i.id+'"]'):null;if(n)for(var o=n.textContent.toLowerCase(),s=0;s<e.length;s++)if(-1!==o.indexOf(e[s]))return i}return null}}();`;
 
 $('bookmarkletCode').value = 'javascript:' + encodeURIComponent(BOOKMARKLET_SOURCE);
 
@@ -1194,4 +1146,5 @@ if('serviceWorker' in navigator){
 }
 </script>
 </body>
+
 </html>
