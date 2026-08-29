@@ -450,8 +450,8 @@ a{color:var(--accent-dark);}
           <li>Ouvre Chrome, va sur n'importe quelle page → menu <strong>⋮</strong> → étoile pour l'ajouter aux favoris.</li>
           <li>Ouvre tes Favoris (⋮ → Favoris) → ⋮ à côté du favori créé → <strong>Modifier</strong>.</li>
           <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
-          <li>Efface le champ adresse, <strong>tape toi-même au clavier</strong> (sans coller) : <span class="mono">javascript:</span></li>
-          <li>Juste après, sans rien effacer, <strong>colle</strong> le code copié à l'étape 1. Enregistre.</li>
+          <li>Appuie dans le champ adresse, appui long → <strong>Tout sélectionner</strong> → supprime.</li>
+          <li><strong>Colle</strong> le code copié à l'étape 1, en une seule fois, sans rien taper au clavier avant ou après. Enregistre directement.</li>
         </ol>
       </div>
 
@@ -461,7 +461,7 @@ a{color:var(--accent-dark);}
           <li>Sur Chrome (ou Mi Browser), ajoute n'importe quelle page à tes favoris via le menu du navigateur.</li>
           <li>Ouvre tes favoris, modifie celui que tu viens de créer.</li>
           <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
-          <li>Efface l'adresse, <strong>tape toi-même</strong> : <span class="mono">javascript:</span> puis <strong>colle</strong> le code juste après. Enregistre.</li>
+          <li>Sélectionne tout dans le champ adresse, supprime, puis <strong>colle</strong> le code copié à l'étape 1 d'un seul geste. Enregistre.</li>
         </ol>
         <div class="callout warn">
           <span class="ic">⚠️</span>
@@ -475,16 +475,16 @@ a{color:var(--accent-dark);}
           <li>Ouvre <strong>Safari</strong> (uniquement Safari), une page quelconque → icône Partager → <strong>« Ajouter aux favoris »</strong>.</li>
           <li>Va dans tes Favoris, appui long sur celui créé → <strong>Modifier</strong>.</li>
           <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
-          <li>Dans le champ adresse, tape <span class="mono">javascript:</span> puis colle le code juste après. Enregistre.</li>
+          <li>Sélectionne tout dans le champ adresse, supprime, puis colle le code copié à l'étape 1. Enregistre.</li>
         </ol>
       </div>
 
       <div class="device-instructions" data-device="windows" style="display:none;">
         <ol class="onboard-steps numbered">
           <li>Sur ton ordi, ouvre l'appli dans Chrome ou Edge, copie le code dans <strong>Réglages → Auto-remplissage Vinted</strong>.</li>
-          <li>Ouvre le gestionnaire de favoris : <span class="mono">Ctrl+Shift+O</span> (Chrome) ou <span class="mono">Ctrl+Shift+O</span> (Edge).</li>
+          <li>Ouvre le gestionnaire de favoris : <span class="mono">Ctrl+Shift+O</span>.</li>
           <li>Clic droit dans la liste → <strong>« Ajouter un nouveau favori »</strong>.</li>
-          <li>Nom : <strong>« Auto-remplir Vinted »</strong>. URL : tape <span class="mono">javascript:</span> puis colle le code juste après.</li>
+          <li>Nom : <strong>« Auto-remplir Vinted »</strong>. Dans le champ URL, colle directement le code copié.</li>
           <li>Enregistre, puis épingle-le dans ta barre de favoris pour l'avoir sous la main sur Vinted.</li>
         </ol>
       </div>
@@ -494,13 +494,13 @@ a{color:var(--accent-dark);}
           <li>Copie le code dans <strong>Réglages → Auto-remplissage Vinted</strong>.</li>
           <li>Dans Safari ou Chrome, ajoute n'importe quelle page aux favoris (<span class="mono">Cmd+D</span>).</li>
           <li>Ouvre l'éditeur de favoris, clic droit sur celui créé → <strong>Modifier l'adresse</strong>.</li>
-          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>. Dans l'adresse, tape <span class="mono">javascript:</span> puis colle le code juste après.</li>
+          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>. Colle directement le code copié dans le champ adresse.</li>
         </ol>
       </div>
 
-      <div class="callout danger" style="margin-top:14px;">
-        <span class="ic">🚫</span>
-        <span>Sur tous les appareils : tape toujours <span class="mono">javascript:</span> toi-même au clavier avant de coller le reste. Certains navigateurs suppriment ce préfixe automatiquement s'il arrive collé d'un bloc, ce qui rend le favori inactif.</span>
+      <div class="callout warn" style="margin-top:14px;">
+        <span class="ic">💡</span>
+        <span>Le code copié contient déjà tout, y compris <span class="mono">javascript:</span> au début — colle-le en un seul geste, sans taper aucune touche avant ou après. Si le favori ouvre plus tard une page bizarre comme « javascript.com », c'est que le clavier a autocomplété le texte : recommence en collant d'un coup, sans laisser l'auto-correction agir.</span>
       </div>
 
       <div class="hint" style="margin-top:12px;">Tu peux aussi faire ça plus tard depuis Réglages, et te contenter du copier-coller classique en attendant — l'appli fonctionne très bien sans.</div>
@@ -718,11 +718,11 @@ a{color:var(--accent-dark);}
     </div>
 
     <div class="field">
-      <label>1. Copie ce code (sans le préfixe)</label>
+      <label>1. Copie ce code</label>
       <textarea id="bookmarkletCode" readonly style="min-height:70px; font-family:'IBM Plex Mono',monospace; font-size:11px;"></textarea>
       <button class="btn small ghost" id="copyBookmarkletBtn" style="margin-top:8px; width:100%;">Copier le code</button>
       <div class="hint">
-        ⚠️ Sur Android, Chrome supprime automatiquement <span class="mono">javascript:</span> si tu le colles d'un coup dans un favori. Il faut donc le <strong>taper toi-même à la main</strong> (juste ces 11 caractères), puis coller le code copié juste après. Voir l'étape 2 ci-dessous.
+        Ce code contient déjà tout, y compris le début <span class="mono">javascript:</span> — colle-le tel quel, en une seule fois, sans rien taper à la main.
       </div>
     </div>
 
@@ -733,10 +733,14 @@ a{color:var(--accent-dark);}
         1. Ouvre n'importe quelle page → menu ⋮ → Favoris (icône étoile) → il s'ajoute.<br>
         2. Va dans Favoris → appuie sur les ⋮ à côté → Modifier.<br>
         3. Renomme-le « Auto-remplir Vinted ».<br>
-        4. Dans le champ adresse : efface tout, puis <strong>tape toi-même</strong> (au clavier, sans coller) les 11 caractères <span class="mono">javascript:</span> — c'est important, un copier-coller de ce préfixe se fait effacer par Chrome.<br>
-        5. Juste après, sans rien effacer, colle le code copié à l'étape 1.<br>
-        6. Enregistre.<br><br>
-        <strong>Sur iPhone (Safari) :</strong> ouvre une page → partage → « Ajouter aux favoris ». Modifie-le (appui long → Modifier), renomme-le, et cette fois tu peux coller <span class="mono">javascript:</span> + le code directement (Safari ne le supprime pas).
+        4. Appuie dans le champ adresse, sélectionne tout (appui long → Tout sélectionner) et supprime.<br>
+        5. <strong>Colle</strong> directement le code copié à l'étape 1, en une seule fois. Ne tape rien au clavier avant ou pendant, pour éviter que la correction automatique modifie le texte.<br>
+        6. Enregistre <strong>sans rouvrir le clavier</strong> après le collage.<br><br>
+        <strong>Sur iPhone (Safari) :</strong> ouvre une page → partage → « Ajouter aux favoris ». Modifie-le (appui long → Modifier), renomme-le, colle le code directement dans le champ adresse.
+      </div>
+      <div class="callout warn" style="margin-top:10px;">
+        <span class="ic">⚠️</span>
+        <span>Si le favori ouvre une page comme « javascript.com » au lieu de faire son travail, c'est que le clavier a autocomplété ou modifié le texte pendant la saisie. Refais l'étape en collant le code d'un seul geste, sans taper aucune touche avant/après, et sans laisser l'auto-complétion du clavier suggérer un site.</span>
       </div>
     </div>
 
@@ -1277,12 +1281,12 @@ $('autofillBtn').addEventListener('click', async ()=>{
 // Version compacte pour rester sous la limite ~2000 caractères des favoris Android.
 const BOOKMARKLET_SOURCE = `!async function(){var e,t="${AUTOFILL_MARKER}";try{e=await navigator.clipboard.readText()}catch(e){return void alert("Autorise l'acces au presse-papier pour ce site, puis retape sur le favori.")}var r=e.indexOf(t);if(-1!==r){var i;try{i=JSON.parse(e.slice(r+t.length))}catch(e){return void alert("Donnees illisibles.")}var a=0,l=c(["title","titre"]);l&&(s(l,i.title),a++);var n=c(["description"]);n&&(s(n,i.description),a++);var o=c(["price","prix"]);o&&(s(o,String(i.price)),a++),alert(a+"/3 champs remplis. Verifie, ajoute tes photos, publie toi-meme.")}else alert("Presse-papier non reconnu. Utilise d'abord le bouton Copier pour auto-remplissage dans l'appli.");function s(e,t){var r=Object.getPrototypeOf(e),i=Object.getOwnPropertyDescriptor(r,"value");i&&i.set?i.set.call(e,t):e.value=t,e.dispatchEvent(new Event("input",{bubbles:!0})),e.dispatchEvent(new Event("change",{bubbles:!0}))}function c(e){for(var t=Array.prototype.slice.call(document.querySelectorAll("input, textarea")),r=0;r<t.length;r++){for(var i=t[r],a=[i.name,i.id,i.placeholder,i.getAttribute("aria-label")].join(" ").toLowerCase(),l=0;l<e.length;l++)if(-1!==a.indexOf(e[l]))return i;var n=i.closest?i.closest("label"):i.id?document.querySelector('label[for="'+i.id+'"]'):null;if(n)for(var o=n.textContent.toLowerCase(),s=0;s<e.length;s++)if(-1!==o.indexOf(e[s]))return i}return null}}();`;
 
-const BOOKMARKLET_ENCODED = encodeURIComponent(BOOKMARKLET_SOURCE);
-$('bookmarkletCode').value = BOOKMARKLET_ENCODED;
+const BOOKMARKLET_FULL = 'javascript:' + encodeURIComponent(BOOKMARKLET_SOURCE);
+$('bookmarkletCode').value = BOOKMARKLET_FULL;
 
 $('copyBookmarkletBtn').addEventListener('click', async ()=>{
-  await navigator.clipboard.writeText(BOOKMARKLET_ENCODED);
-  toast('Code copié — tape javascript: à la main puis colle-le juste après');
+  await navigator.clipboard.writeText(BOOKMARKLET_FULL);
+  toast('Code copié — colle-le en entier dans le favori');
 });
 
 $('openVintedBtn').addEventListener('click', async ()=>{
@@ -1364,4 +1368,5 @@ if('serviceWorker' in navigator){
 </script>
 </body>
 </html>
+
 
