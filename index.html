@@ -370,6 +370,19 @@ a{color:var(--accent-dark);}
 .onboard-steps.numbered{list-style:decimal;}
 .onboard-card .btn{margin-top:16px;}
 .onboard-card a.btn{display:flex;}
+.device-instructions{margin-top:14px;}
+#deviceSegmented{flex-wrap:wrap;}
+#deviceSegmented button{flex:1 1 auto; min-width:90px;}
+
+/* ---------- callouts (info/warn/danger) ---------- */
+.callout{
+  border-radius:var(--radius-md); padding:13px 15px; margin-top:14px; font-size:13.5px;
+  display:flex; gap:10px; align-items:flex-start; line-height:1.55;
+}
+.callout.info{background:var(--accent-soft); color:var(--accent-dark);}
+.callout.warn{background:#FBF3DF; color:#8A6D1D;}
+.callout.danger{background:var(--danger-soft); color:var(--danger);}
+.callout .ic{flex:0 0 auto; font-size:16px; line-height:1.3;}
 
 </style>
 </head>
@@ -381,6 +394,7 @@ a{color:var(--accent-dark);}
       <span class="dot active" data-slide="0"></span>
       <span class="dot" data-slide="1"></span>
       <span class="dot" data-slide="2"></span>
+      <span class="dot" data-slide="3"></span>
     </div>
 
     <!-- Slide 0 : bienvenue -->
@@ -392,11 +406,11 @@ a{color:var(--accent-dark);}
       <button class="btn primary" data-next>C'est parti</button>
     </div>
 
-    <!-- Slide 1 : clé API -->
+    <!-- Slide 1 : clé API (obligatoire) -->
     <div class="onboard-slide" data-slide="1">
-      <div class="onboard-tag">🔑 Étape 1 sur 2</div>
+      <div class="onboard-tag">🔑 Étape 1 sur 3 — obligatoire</div>
       <h2>Ta clé Gemini gratuite</h2>
-      <p>Chaque personne qui utilise l'appli doit avoir sa propre clé, gratuite, en 2 minutes :</p>
+      <p>Chaque personne qui utilise l'appli doit avoir sa propre clé, gratuite, en 2 minutes. L'appli ne peut pas fonctionner sans.</p>
       <ol class="onboard-steps">
         <li>Ouvre <strong>aistudio.google.com/apikey</strong> avec ton compte Google</li>
         <li>Clique sur <strong>Create API key</strong></li>
@@ -407,22 +421,105 @@ a{color:var(--accent-dark);}
       <div class="field">
         <label>Ta clé API Gemini</label>
         <input type="password" id="onboardApiKey" placeholder="AIza...">
-        <div class="hint">Elle reste stockée uniquement sur ce téléphone. Tu peux aussi la coller plus tard depuis l'onglet Réglages.</div>
+        <div class="hint">Elle reste stockée uniquement sur ce téléphone, jamais envoyée ailleurs qu'à Google.</div>
+        <div class="callout danger" id="onboardKeyError" style="display:none; margin-top:10px;">
+          <span class="ic">⚠️</span>
+          <span>Colle ta clé avant de continuer — sans elle, l'appli ne peut générer aucune fiche. Pas encore de clé ? Appuie sur le lien juste au-dessus pour en créer une gratuitement.</span>
+        </div>
       </div>
+      <button class="btn primary" data-next data-guarded="apikey">Continuer</button>
+    </div>
+
+    <!-- Slide 2 : auto-remplissage Vinted avec choix d'appareil -->
+    <div class="onboard-slide" data-slide="2">
+      <div class="onboard-tag">⚡ Étape 2 sur 3 — recommandé</div>
+      <h2>Auto-remplissage Vinted</h2>
+      <p>Un favori de navigateur qui remplit tout seul le titre, la description et le prix sur Vinted. Choisis ton appareil pour voir les étapes exactes :</p>
+
+      <div class="segmented" id="deviceSegmented" style="flex-wrap:wrap;">
+        <button type="button" data-value="samsung">Samsung / Android</button>
+        <button type="button" data-value="xiaomi">Xiaomi</button>
+        <button type="button" data-value="iphone">iPhone</button>
+        <button type="button" data-value="windows">PC Windows</button>
+        <button type="button" data-value="mac">Mac</button>
+      </div>
+
+      <div class="device-instructions" data-device="samsung">
+        <ol class="onboard-steps numbered">
+          <li>Dans l'appli, va dans <strong>Réglages → Auto-remplissage Vinted</strong>, appuie sur <strong>« Copier le code »</strong>.</li>
+          <li>Ouvre Chrome, va sur n'importe quelle page → menu <strong>⋮</strong> → étoile pour l'ajouter aux favoris.</li>
+          <li>Ouvre tes Favoris (⋮ → Favoris) → ⋮ à côté du favori créé → <strong>Modifier</strong>.</li>
+          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
+          <li>Efface le champ adresse, <strong>tape toi-même au clavier</strong> (sans coller) : <span class="mono">javascript:</span></li>
+          <li>Juste après, sans rien effacer, <strong>colle</strong> le code copié à l'étape 1. Enregistre.</li>
+        </ol>
+      </div>
+
+      <div class="device-instructions" data-device="xiaomi" style="display:none;">
+        <ol class="onboard-steps numbered">
+          <li>Dans l'appli, va dans <strong>Réglages → Auto-remplissage Vinted</strong>, appuie sur <strong>« Copier le code »</strong>.</li>
+          <li>Sur Chrome (ou Mi Browser), ajoute n'importe quelle page à tes favoris via le menu du navigateur.</li>
+          <li>Ouvre tes favoris, modifie celui que tu viens de créer.</li>
+          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
+          <li>Efface l'adresse, <strong>tape toi-même</strong> : <span class="mono">javascript:</span> puis <strong>colle</strong> le code juste après. Enregistre.</li>
+        </ol>
+        <div class="callout warn">
+          <span class="ic">⚠️</span>
+          <span>Sur certains navigateurs Xiaomi (Mi Browser), l'écran d'édition des favoris peut varier légèrement — cherche une icône crayon ou un appui long sur le favori pour trouver « Modifier ».</span>
+        </div>
+      </div>
+
+      <div class="device-instructions" data-device="iphone" style="display:none;">
+        <ol class="onboard-steps numbered">
+          <li>Dans l'appli, va dans <strong>Réglages → Auto-remplissage Vinted</strong>, appuie sur <strong>« Copier le code »</strong>.</li>
+          <li>Ouvre <strong>Safari</strong> (uniquement Safari), une page quelconque → icône Partager → <strong>« Ajouter aux favoris »</strong>.</li>
+          <li>Va dans tes Favoris, appui long sur celui créé → <strong>Modifier</strong>.</li>
+          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
+          <li>Dans le champ adresse, tape <span class="mono">javascript:</span> puis colle le code juste après. Enregistre.</li>
+        </ol>
+      </div>
+
+      <div class="device-instructions" data-device="windows" style="display:none;">
+        <ol class="onboard-steps numbered">
+          <li>Sur ton ordi, ouvre l'appli dans Chrome ou Edge, copie le code dans <strong>Réglages → Auto-remplissage Vinted</strong>.</li>
+          <li>Ouvre le gestionnaire de favoris : <span class="mono">Ctrl+Shift+O</span> (Chrome) ou <span class="mono">Ctrl+Shift+O</span> (Edge).</li>
+          <li>Clic droit dans la liste → <strong>« Ajouter un nouveau favori »</strong>.</li>
+          <li>Nom : <strong>« Auto-remplir Vinted »</strong>. URL : tape <span class="mono">javascript:</span> puis colle le code juste après.</li>
+          <li>Enregistre, puis épingle-le dans ta barre de favoris pour l'avoir sous la main sur Vinted.</li>
+        </ol>
+      </div>
+
+      <div class="device-instructions" data-device="mac" style="display:none;">
+        <ol class="onboard-steps numbered">
+          <li>Copie le code dans <strong>Réglages → Auto-remplissage Vinted</strong>.</li>
+          <li>Dans Safari ou Chrome, ajoute n'importe quelle page aux favoris (<span class="mono">Cmd+D</span>).</li>
+          <li>Ouvre l'éditeur de favoris, clic droit sur celui créé → <strong>Modifier l'adresse</strong>.</li>
+          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>. Dans l'adresse, tape <span class="mono">javascript:</span> puis colle le code juste après.</li>
+        </ol>
+      </div>
+
+      <div class="callout danger" style="margin-top:14px;">
+        <span class="ic">🚫</span>
+        <span>Sur tous les appareils : tape toujours <span class="mono">javascript:</span> toi-même au clavier avant de coller le reste. Certains navigateurs suppriment ce préfixe automatiquement s'il arrive collé d'un bloc, ce qui rend le favori inactif.</span>
+      </div>
+
+      <div class="hint" style="margin-top:12px;">Tu peux aussi faire ça plus tard depuis Réglages, et te contenter du copier-coller classique en attendant — l'appli fonctionne très bien sans.</div>
+
       <button class="btn primary" data-next>Continuer</button>
     </div>
 
-    <!-- Slide 2 : tutoriel -->
-    <div class="onboard-slide" data-slide="2">
-      <div class="onboard-tag">📸 Étape 2 sur 2</div>
+    <!-- Slide 3 : tutoriel -->
+    <div class="onboard-slide" data-slide="3">
+      <div class="onboard-tag">📸 Étape 3 sur 3</div>
       <h2>Comment ça marche</h2>
       <ol class="onboard-steps numbered">
         <li><strong>Photographie</strong> ton article dans l'onglet Nouveau (plusieurs angles = meilleure fiche).</li>
         <li><strong>Génère la fiche</strong> : titre, description, catégorie, prix et tags arrivent en quelques secondes.</li>
         <li><strong>Vérifie et corrige</strong> — l'IA peut se tromper sur la marque, l'état ou un défaut, relis toujours avant de publier.</li>
-        <li><strong>Importe dans Vinted</strong> : copier-coller classique, ou l'auto-remplissage ⚡ (favori à installer une fois, dans Réglages) pour remplir titre/description/prix en un tap.</li>
+        <li><strong>Importe dans Vinted</strong> : copier-coller classique, ou l'auto-remplissage ⚡ pour remplir titre/description/prix en un tap.</li>
         <li>Ajoute tes photos et <strong>publie toi-même</strong> — ce dernier geste reste toujours manuel.</li>
       </ol>
+      <p class="hint">Un guide complet et détaillé reste accessible à tout moment depuis Réglages, si jamais tu as un doute.</p>
       <button class="btn primary" id="onboardFinish">Terminer</button>
     </div>
   </div>
@@ -455,6 +552,12 @@ a{color:var(--accent-dark);}
     <hr class="divider" id="resultDivider" style="display:none;">
 
     <div id="resultBlock" style="display:none;">
+      <div class="callout info" id="historyBanner" style="display:none; align-items:center;">
+        <img id="historyBannerThumb" src="" style="width:40px;height:40px;border-radius:8px;object-fit:cover;flex:0 0 auto;" onerror="this.style.display='none'">
+        <span style="flex:1;">Fiche chargée depuis l'historique — modifie-la librement.</span>
+        <button class="btn small ghost" id="historyBannerClose" style="margin:0; width:auto; flex:0 0 auto;">Nouvelle fiche</button>
+      </div>
+
       <div class="field">
         <label>Titre</label>
         <input type="text" id="f-title">
@@ -501,7 +604,7 @@ a{color:var(--accent-dark);}
 
       <div class="field">
         <label>Tags suggérés</label>
-        <div class="tags" id="f-tags"></div>
+        <div id="f-tags"></div>
       </div>
 
       <hr class="divider">
@@ -574,6 +677,18 @@ a{color:var(--accent-dark);}
 
     <div class="section-title">Aide</div>
     <div class="list-group">
+      <a class="list-row tappable" href="./guide.html" target="_blank" rel="noopener">
+        <div class="row-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="row-content">
+          <div class="row-label">Guide complet illustré</div>
+          <div class="row-desc">Toutes les étapes en détail, par type d'appareil</div>
+        </div>
+        <div class="row-chevron">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
       <div class="list-row tappable" id="reopenOnboardBtn">
         <div class="row-icon">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v4l3 3M12 3a9 9 0 1 0 9 9" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -603,16 +718,25 @@ a{color:var(--accent-dark);}
     </div>
 
     <div class="field">
-      <label>1. Copie ce code</label>
+      <label>1. Copie ce code (sans le préfixe)</label>
       <textarea id="bookmarkletCode" readonly style="min-height:70px; font-family:'IBM Plex Mono',monospace; font-size:11px;"></textarea>
       <button class="btn small ghost" id="copyBookmarkletBtn" style="margin-top:8px; width:100%;">Copier le code</button>
+      <div class="hint">
+        ⚠️ Sur Android, Chrome supprime automatiquement <span class="mono">javascript:</span> si tu le colles d'un coup dans un favori. Il faut donc le <strong>taper toi-même à la main</strong> (juste ces 11 caractères), puis coller le code copié juste après. Voir l'étape 2 ci-dessous.
+      </div>
     </div>
 
     <div class="field">
       <label>2. Installe-le une seule fois</label>
       <div class="hint">
-        <strong>Sur iPhone (Safari) :</strong> ouvre n'importe quelle page → partage → « Ajouter aux favoris ». Puis modifie ce favori (dans tes favoris, appui long → Modifier) : renomme-le « Auto-remplir Vinted » et colle le code copié à la place de l'adresse.<br><br>
-        <strong>Sur Android (Chrome) :</strong> ouvre le menu ⋮ → Favoris → Ajouter. Puis modifie ce favori (⋮ à côté du favori → Modifier), renomme-le « Auto-remplir Vinted » et colle le code copié à la place de l'URL.
+        <strong>Sur Android (Chrome) :</strong><br>
+        1. Ouvre n'importe quelle page → menu ⋮ → Favoris (icône étoile) → il s'ajoute.<br>
+        2. Va dans Favoris → appuie sur les ⋮ à côté → Modifier.<br>
+        3. Renomme-le « Auto-remplir Vinted ».<br>
+        4. Dans le champ adresse : efface tout, puis <strong>tape toi-même</strong> (au clavier, sans coller) les 11 caractères <span class="mono">javascript:</span> — c'est important, un copier-coller de ce préfixe se fait effacer par Chrome.<br>
+        5. Juste après, sans rien effacer, colle le code copié à l'étape 1.<br>
+        6. Enregistre.<br><br>
+        <strong>Sur iPhone (Safari) :</strong> ouvre une page → partage → « Ajouter aux favoris ». Modifie-le (appui long → Modifier), renomme-le, et cette fois tu peux coller <span class="mono">javascript:</span> + le code directement (Safari ne le supprime pas).
       </div>
     </div>
 
@@ -813,6 +937,12 @@ $('clearAllBtn').addEventListener('click', ()=>{
 const onboard = $('onboard');
 let onboardSlide = 0;
 const totalSlides = document.querySelectorAll('.onboard-slide').length;
+const deviceControl = initSegmented('deviceSegmented', 'samsung', (val)=>{
+  document.querySelectorAll('.device-instructions').forEach(el=>{
+    el.style.display = el.dataset.device === val ? 'block' : 'none';
+  });
+});
+deviceControl.setValue('samsung');
 
 function showOnboardSlide(i){
   onboardSlide = i;
@@ -823,6 +953,7 @@ function showOnboardSlide(i){
 function openOnboard(){
   showOnboardSlide(0);
   $('onboardApiKey').value = store.get('apiKey', '');
+  $('onboardKeyError').style.display = 'none';
   onboard.classList.add('show');
 }
 
@@ -832,13 +963,25 @@ function closeOnboard(){
 
 document.querySelectorAll('.onboard-slide [data-next]').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    // sauvegarde la clé si on quitte l'étape 1
-    if(onboardSlide === 1){
+    // Étape clé API : obligatoire pour continuer
+    if(btn.dataset.guarded === 'apikey'){
       const key = $('onboardApiKey').value.trim();
-      if(key){ store.set('apiKey', key); loadSettings(); }
+      if(!key || key.length < 15){
+        $('onboardKeyError').style.display = 'flex';
+        $('onboardApiKey').focus();
+        return;
+      }
+      $('onboardKeyError').style.display = 'none';
+      store.set('apiKey', key);
+      loadSettings();
     }
     if(onboardSlide < totalSlides - 1) showOnboardSlide(onboardSlide + 1);
   });
+});
+
+// Cache l'erreur dès que l'utilisateur retape quelque chose
+$('onboardApiKey').addEventListener('input', ()=>{
+  $('onboardKeyError').style.display = 'none';
 });
 
 $('onboardFinish').addEventListener('click', ()=>{
@@ -937,6 +1080,26 @@ const PROMPT = (tone) => `Tu es un expert en petites annonces sur Vinted en Fran
 }
 Sois honnête : si tu ne peux pas déterminer un champ avec confiance, laisse une chaîne vide plutôt que d'inventer.`;
 
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+async function callGeminiOnce(model, apiKey, parts, tone){
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ role: 'user', parts }],
+      generationConfig: { temperature: 0.6, response_mime_type: 'application/json' }
+    })
+  });
+  if(!res.ok){
+    const errText = await res.text();
+    const err = new Error(`Erreur API (${res.status}) : ${errText.slice(0,200)}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
+
 async function callGemini(){
   const apiKey = store.get('apiKey', '');
   if(!apiKey){
@@ -948,40 +1111,54 @@ async function callGemini(){
   const model = store.get('model', 'gemini-flash-latest');
   const tone = store.get('tone', 'clair et efficace, orienté vente rapide');
 
-  showStatus('loading', 'Analyse des photos en cours…');
   $('analyzeBtn').disabled = true;
 
   const parts = [{ text: PROMPT(tone) }];
   state.photos.forEach(p => parts.push({ inline_data: { mime_type: p.mime, data: p.base64 } }));
 
-  try{
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts }],
-        generationConfig: { temperature: 0.6, response_mime_type: 'application/json' }
-      })
-    });
+  const maxAttempts = 3;
+  let lastErr = null;
 
-    if(!res.ok){
-      const errText = await res.text();
-      throw new Error(`Erreur API (${res.status}) : ${errText.slice(0,200)}`);
+  for(let attempt = 1; attempt <= maxAttempts; attempt++){
+    try{
+      if(attempt === 1){
+        showStatus('loading', 'Analyse des photos en cours…');
+      }else{
+        showStatus('loading', `Serveurs saturés, nouvel essai (${attempt}/${maxAttempts})…`);
+      }
+
+      const data = await callGeminiOnce(model, apiKey, parts, tone);
+      const raw = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join('') || '';
+      const clean = raw.replace(/```json|```/g, '').trim();
+      const json = JSON.parse(clean);
+
+      fillResult(json);
+      showStatus('ok', 'Fiche générée ✓');
+      lastErr = null;
+      break;
+    }catch(err){
+      lastErr = err;
+      const retryable = err.status === 503 || err.status === 429;
+      console.error(err);
+      if(retryable && attempt < maxAttempts){
+        await sleep(1500 * attempt);
+        continue;
+      }
+      break;
     }
-
-    const data = await res.json();
-    const raw = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join('') || '';
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const json = JSON.parse(clean);
-
-    fillResult(json);
-    showStatus('ok', 'Fiche générée ✓');
-  }catch(err){
-    console.error(err);
-    showStatus('error', 'Échec de la génération : ' + err.message);
-  }finally{
-    $('analyzeBtn').disabled = state.photos.length === 0;
   }
+
+  if(lastErr){
+    if(lastErr.status === 503){
+      showStatus('error', 'Les serveurs Gemini sont temporairement saturés. Réessaie dans une minute, ou change de modèle dans Réglages (essaie Gemini 3.1 Flash-Lite, moins demandé).');
+    }else if(lastErr.status === 429){
+      showStatus('error', 'Limite de requêtes atteinte pour ta clé gratuite. Attends une minute avant de réessayer.');
+    }else{
+      showStatus('error', 'Échec de la génération : ' + lastErr.message);
+    }
+  }
+
+  $('analyzeBtn').disabled = state.photos.length === 0;
 }
 
 function showStatus(type, msg){
@@ -999,6 +1176,8 @@ function showStatus(type, msg){
 
 function fillResult(json){
   lastResult = json;
+  $('historyBanner').style.display = 'none';
+  $('regenBtn').style.display = '';
   $('f-title').value = json.title || '';
   $('f-category').value = json.category || '';
   $('f-brand').value = json.brand || '';
@@ -1018,6 +1197,37 @@ function fillResult(json){
   $('resultDivider').style.display = 'block';
   $('resultBlock').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
+// ---------- ouvrir une fiche depuis l'historique ----------
+function loadHistoryItemIntoResult(item){
+  const adapted = {
+    title: item.title,
+    category: item.category,
+    brand: item.brand,
+    size: item.size,
+    condition: item.condition,
+    description: item.description,
+    suggested_price_eur: item.price,
+    hashtags: (item.tags || []).map(t => t.replace(/^#/, ''))
+  };
+  fillResult(adapted);
+
+  const banner = $('historyBanner');
+  banner.style.display = 'flex';
+  const thumb = $('historyBannerThumb');
+  if(item.thumb){ thumb.src = item.thumb; thumb.style.display = 'block'; }
+  else { thumb.style.display = 'none'; }
+
+  $('regenBtn').style.display = 'none';
+
+  layoutThumb(0, true);
+  setActiveTab(0);
+}
+
+$('historyBannerClose').addEventListener('click', ()=>{
+  $('historyBanner').style.display = 'none';
+  $('regenBtn').style.display = '';
+});
 
 $('analyzeBtn').addEventListener('click', callGemini);
 $('regenBtn').addEventListener('click', callGemini);
@@ -1067,11 +1277,12 @@ $('autofillBtn').addEventListener('click', async ()=>{
 // Version compacte pour rester sous la limite ~2000 caractères des favoris Android.
 const BOOKMARKLET_SOURCE = `!async function(){var e,t="${AUTOFILL_MARKER}";try{e=await navigator.clipboard.readText()}catch(e){return void alert("Autorise l'acces au presse-papier pour ce site, puis retape sur le favori.")}var r=e.indexOf(t);if(-1!==r){var i;try{i=JSON.parse(e.slice(r+t.length))}catch(e){return void alert("Donnees illisibles.")}var a=0,l=c(["title","titre"]);l&&(s(l,i.title),a++);var n=c(["description"]);n&&(s(n,i.description),a++);var o=c(["price","prix"]);o&&(s(o,String(i.price)),a++),alert(a+"/3 champs remplis. Verifie, ajoute tes photos, publie toi-meme.")}else alert("Presse-papier non reconnu. Utilise d'abord le bouton Copier pour auto-remplissage dans l'appli.");function s(e,t){var r=Object.getPrototypeOf(e),i=Object.getOwnPropertyDescriptor(r,"value");i&&i.set?i.set.call(e,t):e.value=t,e.dispatchEvent(new Event("input",{bubbles:!0})),e.dispatchEvent(new Event("change",{bubbles:!0}))}function c(e){for(var t=Array.prototype.slice.call(document.querySelectorAll("input, textarea")),r=0;r<t.length;r++){for(var i=t[r],a=[i.name,i.id,i.placeholder,i.getAttribute("aria-label")].join(" ").toLowerCase(),l=0;l<e.length;l++)if(-1!==a.indexOf(e[l]))return i;var n=i.closest?i.closest("label"):i.id?document.querySelector('label[for="'+i.id+'"]'):null;if(n)for(var o=n.textContent.toLowerCase(),s=0;s<e.length;s++)if(-1!==o.indexOf(e[s]))return i}return null}}();`;
 
-$('bookmarkletCode').value = 'javascript:' + encodeURIComponent(BOOKMARKLET_SOURCE);
+const BOOKMARKLET_ENCODED = encodeURIComponent(BOOKMARKLET_SOURCE);
+$('bookmarkletCode').value = BOOKMARKLET_ENCODED;
 
 $('copyBookmarkletBtn').addEventListener('click', async ()=>{
-  await navigator.clipboard.writeText($('bookmarkletCode').value);
-  toast('Code copié — colle-le dans l\'URL de ton favori');
+  await navigator.clipboard.writeText(BOOKMARKLET_ENCODED);
+  toast('Code copié — tape javascript: à la main puis colle-le juste après');
 });
 
 $('openVintedBtn').addEventListener('click', async ()=>{
@@ -1124,12 +1335,18 @@ function renderHistory(){
         <button class="icon-btn" data-act="copy" aria-label="Copier">${ICON_COPY}</button>
         <button class="icon-btn danger" data-act="delete" aria-label="Supprimer">${ICON_TRASH}</button>
       </div>`;
-    card.querySelector('[data-act="copy"]').addEventListener('click', async ()=>{
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', ()=>{
+      loadHistoryItemIntoResult(item);
+    });
+    card.querySelector('[data-act="copy"]').addEventListener('click', async (e)=>{
+      e.stopPropagation();
       const text = `${item.title}\n\n${item.description}\n\nCatégorie : ${item.category}\nMarque : ${item.brand || '—'}\nTaille : ${item.size || '—'}\nÉtat : ${item.condition}\nPrix : ${item.price} €\n\n${(item.tags||[]).join(' ')}`;
       await navigator.clipboard.writeText(text);
       toast('Fiche copiée');
     });
-    card.querySelector('[data-act="delete"]').addEventListener('click', ()=>{
+    card.querySelector('[data-act="delete"]').addEventListener('click', (e)=>{
+      e.stopPropagation();
       const remaining = store.get('listings', []).filter(l=>l.id !== item.id);
       store.set('listings', remaining);
       renderHistory();
@@ -1146,5 +1363,5 @@ if('serviceWorker' in navigator){
 }
 </script>
 </body>
-
 </html>
+
