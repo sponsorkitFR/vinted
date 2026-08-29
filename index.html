@@ -1261,12 +1261,19 @@ $('copyBtn').addEventListener('click', async ()=>{
 const AUTOFILL_MARKER = '##VINTEDAI##';
 
 $('autofillBtn').addEventListener('click', async ()=>{
+  // La catégorie est découpée en niveaux ("Vêtements femme > Robes" -> ["Vêtements femme","Robes"])
+  // pour permettre à une automatisation externe (ex: MacroDroid) de taper les écrans
+  // de sélection de catégorie de Vinted un niveau après l'autre.
+  const categoryRaw = $('f-category').value || '';
+  const categoryLevels = categoryRaw.split('>').map(s => s.trim()).filter(Boolean);
   const payload = {
     title: $('f-title').value,
     description: $('f-description').value,
     price: $('f-price').textContent.trim(),
     brand: $('f-brand').value,
-    size: $('f-size').value
+    size: $('f-size').value,
+    category: categoryRaw,
+    categoryLevels: categoryLevels
   };
   const text = AUTOFILL_MARKER + JSON.stringify(payload);
   try{
