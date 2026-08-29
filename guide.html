@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guide complet — Prêt à Vendre</title>
+<meta name="color-scheme" content="light">
+<link rel="icon" href="./icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#F5F4F1; --surface:#FFFFFF; --surface-2:#EDECE7;
+  --ink:#1B1C1E; --ink-soft:#6C6F73; --ink-faint:#A2A5A8;
+  --line:rgba(27,28,30,.09);
+  --accent:#1F5E4C; --accent-dark:#164839; --accent-soft:#E4EEE9;
+  --danger:#B3402C; --danger-soft:#F7E9E5;
+  --radius-lg:20px; --radius-md:14px; --radius-sm:10px;
+  --shadow-sm:0 1px 2px rgba(27,28,30,.06), 0 1px 1px rgba(27,28,30,.04);
+  --shadow-md:0 10px 28px rgba(27,28,30,.10), 0 2px 6px rgba(27,28,30,.06);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html{color-scheme:light;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif; line-height:1.6;
+  padding-bottom:60px;
+}
+.wrap{max-width:640px; margin:0 auto; padding:0 20px;}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-.01em; color:var(--ink);}
+.mono{font-family:'IBM Plex Mono',monospace;}
+
+header{
+  padding:28px 0 22px; background:var(--surface); border-bottom:1px solid var(--line);
+  margin-bottom:8px;
+}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+header h1{font-size:20px; margin:0;}
+header p{margin:4px 0 0; font-size:13px; color:var(--ink-soft);}
+.back-link{
+  flex:0 0 auto; display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; font-weight:600; color:var(--accent-dark); text-decoration:none;
+  background:var(--accent-soft); padding:9px 14px; border-radius:20px;
+}
+
+.toc{
+  background:var(--surface); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm);
+  padding:18px 20px; margin:24px 0; list-style:none;
+}
+.toc-title{font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); font-weight:600; margin-bottom:10px;}
+.toc a{display:block; padding:7px 0; color:var(--ink); text-decoration:none; font-size:14px; border-bottom:1px solid var(--line);}
+.toc a:last-child{border-bottom:none;}
+.toc a::before{content:"→ "; color:var(--accent);}
+
+section.step{
+  background:var(--surface); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm);
+  padding:24px 22px; margin:18px 0; scroll-margin-top:16px;
+}
+.step-num{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; border-radius:50%; background:var(--accent); color:#fff;
+  font-family:'Fraunces',serif; font-weight:600; font-size:14px; flex:0 0 auto;
+}
+.step-head{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+.step-head h2{font-size:18px; margin:0;}
+.step-optional{
+  font-size:11px; text-transform:uppercase; letter-spacing:.05em; font-weight:600;
+  color:var(--ink-soft); background:var(--surface-2); padding:3px 9px; border-radius:10px;
+  margin-left:auto;
+}
+
+.substep{
+  display:flex; gap:12px; padding:12px 0; border-top:1px solid var(--line);
+}
+.substep:first-of-type{border-top:none; padding-top:4px;}
+.substep .dot{
+  width:22px; height:22px; border-radius:50%; background:var(--surface-2); color:var(--ink-soft);
+  display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700;
+  flex:0 0 auto; margin-top:1px;
+}
+.substep .txt{font-size:14.5px; color:var(--ink);}
+.substep .txt strong{color:var(--ink);}
+
+.callout{
+  border-radius:var(--radius-md); padding:13px 15px; margin-top:14px; font-size:13.5px;
+  display:flex; gap:10px; align-items:flex-start;
+}
+.callout.info{background:var(--accent-soft); color:var(--accent-dark);}
+.callout.warn{background:#FBF3DF; color:#8A6D1D;}
+.callout.danger{background:var(--danger-soft); color:var(--danger);}
+.callout .ic{flex:0 0 auto; font-size:16px; line-height:1.3;}
+
+a.btn-link{
+  display:inline-flex; align-items:center; gap:8px; margin-top:14px;
+  background:var(--ink); color:#fff; text-decoration:none; font-weight:600; font-size:14px;
+  padding:12px 18px; border-radius:var(--radius-md);
+}
+a.btn-link.accent{background:var(--accent);}
+
+.codebox{
+  background:var(--ink); color:#E8E6DF; font-family:'IBM Plex Mono',monospace; font-size:12px;
+  padding:12px 14px; border-radius:var(--radius-sm); overflow-x:auto; margin-top:10px;
+  white-space:pre-wrap; word-break:break-all;
+}
+
+/* FAQ accordion (natif, sans JS) */
+details.faq{
+  background:var(--surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm);
+  margin-bottom:10px; padding:0;
+}
+details.faq summary{
+  list-style:none; cursor:pointer; padding:15px 18px; font-weight:600; font-size:14.5px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+details.faq summary::-webkit-details-marker{display:none;}
+details.faq summary::after{
+  content:"+"; font-size:20px; color:var(--ink-soft); font-weight:400; flex:0 0 auto; transition:transform .2s ease;
+}
+details.faq[open] summary::after{content:"–";}
+details.faq .faq-body{padding:0 18px 16px; font-size:13.5px; color:var(--ink-soft); line-height:1.6;}
+details.faq .faq-body p{margin:0 0 8px;}
+details.faq .faq-body p:last-child{margin-bottom:0;}
+
+.section-title{
+  font-size:12px; text-transform:uppercase; letter-spacing:.07em; font-weight:600;
+  color:var(--ink-soft); margin:32px 4px 12px;
+}
+footer{text-align:center; font-size:12.5px; color:var(--ink-faint); margin-top:36px; padding:0 20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div>
+      <h1>Guide complet</h1>
+      <p>Tout savoir sur Prêt à Vendre, étape par étape</p>
+    </div>
+    <a class="back-link" href="./index.html">← Retour à l'appli</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <p>Ce guide t'explique tout, du tout début jusqu'aux petits pépins possibles. Prends 5 minutes la première fois, ensuite tu n'y reviendras presque plus.</p>
+
+  <ul class="toc">
+    <li class="toc-title">Sommaire</li>
+    <li><a href="#etape1">Créer ta clé Gemini gratuite</a></li>
+    <li><a href="#etape2">Installer l'appli sur ton téléphone</a></li>
+    <li><a href="#etape3">Utiliser l'appli au quotidien</a></li>
+    <li><a href="#etape4">Auto-remplissage Vinted (optionnel)</a></li>
+    <li><a href="#faq">Questions fréquentes / dépannage</a></li>
+  </ul>
+
+  <!-- ============ ÉTAPE 1 ============ -->
+  <section class="step" id="etape1">
+    <div class="step-head">
+      <span class="step-num">1</span>
+      <h2>Ta clé Gemini gratuite</h2>
+    </div>
+    <p style="margin-top:0; color:var(--ink-soft); font-size:14px;">
+      L'appli utilise l'intelligence artificielle de Google (Gemini) pour rédiger tes annonces. Chaque personne doit avoir <strong>sa propre clé</strong>, gratuite, pour que chacun ait son propre quota et que ça ne dépende pas d'une seule personne.
+    </p>
+
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Sur ton téléphone ou ton ordi, ouvre <span class="mono">aistudio.google.com/apikey</span> et connecte-toi avec <strong>ton compte Google</strong> habituel (Gmail).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Clique sur le bouton bleu <strong>« Create API key »</strong> (parfois traduit « Créer une clé API »).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">3</span>
+      <span class="txt">Une fenêtre affiche une longue suite de lettres/chiffres qui commence par <span class="mono">AIza...</span> — c'est ta clé. Appuie sur l'icône de copie à côté pour la copier.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">4</span>
+      <span class="txt">Garde-la de côté (Notes, message à toi-même...), tu vas la coller dans l'appli à l'étape suivante.</span>
+    </div>
+
+    <div class="callout info">
+      <span class="ic">ℹ️</span>
+      <span>Gratuit veut vraiment dire gratuit : aucune carte bancaire n'est demandée pour ce niveau d'usage. Google fixe juste un nombre de requêtes gratuites par jour, largement suffisant pour un usage perso.</span>
+    </div>
+    <div class="callout warn">
+      <span class="ic">⚠️</span>
+      <span>Ne partage jamais ta clé publiquement (ex : dans un groupe WhatsApp public ou un post Instagram). N'importe qui avec ta clé peut l'utiliser à ta place et consommer ton quota gratuit. La coller dans l'appli (sur ton propre téléphone) est sans risque : elle y reste stockée uniquement en local.</span>
+    </div>
+
+    <a class="btn-link accent" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Ouvrir aistudio.google.com/apikey →</a>
+  </section>
+
+  <!-- ============ ÉTAPE 2 ============ -->
+  <section class="step" id="etape2">
+    <div class="step-head">
+      <span class="step-num">2</span>
+      <h2>Installer l'appli</h2>
+    </div>
+
+    <div class="section-title" style="margin-top:0;">Sur Android (Chrome)</div>
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Ouvre Chrome et va sur l'adresse de l'appli (celle que la personne qui te l'a partagée t'a donnée, type <span class="mono">https://....github.io/....</span>).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Appuie sur les <strong>⋮</strong> (trois points, en haut à droite).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">3</span>
+      <span class="txt">Appuie sur <strong>« Ajouter à l'écran d'accueil »</strong> (ou <strong>« Installer l'application »</strong> si Chrome le propose directement).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">4</span>
+      <span class="txt">Confirme. Une icône apparaît sur ton écran d'accueil, comme une vraie appli.</span>
+    </div>
+
+    <div class="section-title">Sur iPhone (Safari)</div>
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Ouvre <strong>Safari</strong> (uniquement Safari, pas Chrome sur iPhone — c'est une limite d'Apple).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Va sur l'adresse de l'appli, puis appuie sur l'icône <strong>Partager</strong> (le carré avec une flèche vers le haut, en bas de l'écran).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">3</span>
+      <span class="txt">Fais défiler et appuie sur <strong>« Sur l'écran d'accueil »</strong>.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">4</span>
+      <span class="txt">Confirme le nom, appuie sur <strong>Ajouter</strong>.</span>
+    </div>
+
+    <div class="section-title">Configurer ta clé dans l'appli</div>
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Ouvre l'appli depuis son icône. Un petit tutoriel s'affiche la première fois — c'est le moment de coller ta clé Gemini quand il te la demande.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Si tu l'as fermé trop vite : va dans l'onglet <strong>Réglages</strong> (en bas), colle ta clé dans le champ « Clé API Gemini », puis appuie sur <strong>Enregistrer</strong>.</span>
+    </div>
+
+    <div class="callout info">
+      <span class="ic">🔒</span>
+      <span>Ta clé reste uniquement sur ton téléphone. Elle n'est jamais envoyée à qui que ce soit d'autre que Google (pour faire fonctionner l'IA), et pas du tout à la personne qui a créé l'appli.</span>
+    </div>
+  </section>
+
+  <!-- ============ ÉTAPE 3 ============ -->
+  <section class="step" id="etape3">
+    <div class="step-head">
+      <span class="step-num">3</span>
+      <h2>Utiliser l'appli</h2>
+    </div>
+
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Onglet <strong>Nouveau</strong> → appuie sur la zone en pointillés pour prendre 2 à 5 photos de ton article (plusieurs angles + une étiquette si possible = meilleur résultat).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Appuie sur <strong>« Générer la fiche avec l'IA »</strong>. Ça prend entre 3 et 15 secondes.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">3</span>
+      <span class="txt"><strong>Relis toujours</strong> le titre, la description, la marque, l'état et le prix avant de continuer — l'IA fait de son mieux mais peut se tromper (par exemple sur une marque peu visible). Corrige directement dans les champs si besoin.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">4</span>
+      <span class="txt">Pour publier sur Vinted, deux méthodes : <strong>« Copier la fiche en texte »</strong> (colle-la à la main dans Vinted) ou <strong>« Copier pour auto-remplissage ⚡ »</strong> si tu as installé le favori magique (voir étape 4).</span>
+    </div>
+    <div class="substep">
+      <span class="dot">5</span>
+      <span class="txt">Dans tous les cas, <strong>ajoute les photos et clique sur Publier toi-même</strong> sur Vinted — ce geste final reste volontairement manuel.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">6</span>
+      <span class="txt">Optionnel : appuie sur <strong>« Enregistrer dans l'historique »</strong> pour retrouver tes fiches plus tard dans l'onglet Historique.</span>
+    </div>
+  </section>
+
+  <!-- ============ ÉTAPE 4 ============ -->
+  <section class="step" id="etape4">
+    <div class="step-head">
+      <span class="step-num">4</span>
+      <h2>Auto-remplissage Vinted</h2>
+      <span class="step-optional">Optionnel</span>
+    </div>
+    <p style="margin-top:0; color:var(--ink-soft); font-size:14px;">
+      Une fois installé, un simple favori remplit tout seul le titre, la description et le prix sur la page « nouvelle annonce » de Vinted. À faire <strong>une seule fois</strong>.
+    </p>
+
+    <div class="callout warn">
+      <span class="ic">⚠️</span>
+      <span>Vinted n'a pas de fonction officielle pour ça. Ce favori ne fait que remplir des champs de texte visibles sur la page — il n'ajoute jamais tes photos et ne clique jamais sur Publier à ta place. Si Vinted change son site un jour, ce favori peut arrêter de marcher : le copier-coller manuel restera toujours disponible.</span>
+    </div>
+
+    <div class="section-title" style="margin-top:20px;">Installation sur Android (Chrome)</div>
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Dans l'appli, va dans <strong>Réglages</strong>, section « Auto-remplissage Vinted », appuie sur <strong>« Copier le code »</strong>.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Ouvre Chrome, va sur n'importe quelle page (ex : google.com), appuie sur ⋮ → l'icône étoile pour l'ajouter aux favoris.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">3</span>
+      <span class="txt">Ouvre tes Favoris (⋮ → Favoris), trouve celui que tu viens de créer, appuie sur les ⋮ à côté → <strong>Modifier</strong>.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">4</span>
+      <span class="txt">Renomme-le <strong>« Auto-remplir Vinted »</strong>.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">5</span>
+      <span class="txt">Dans le champ adresse : efface tout ce qu'il y a, puis <strong>tape toi-même au clavier</strong> (n'utilise surtout pas copier-coller pour ça) exactement :</span>
+    </div>
+    <div class="codebox">javascript:</div>
+    <div class="substep">
+      <span class="dot">6</span>
+      <span class="txt">Juste derrière, sans rien effacer, <strong>colle</strong> (cette fois avec coller) le code que tu as copié à l'étape 1. Enregistre.</span>
+    </div>
+
+    <div class="callout danger">
+      <span class="ic">🚫</span>
+      <span><strong>Pourquoi taper "javascript:" à la main ?</strong> Par sécurité, Chrome Android supprime automatiquement ce mot si tu le colles d'un coup avec le reste du code dans un favori. Résultat : le favori ne fait plus rien du tout quand tu tapes dessus. Le taper toi-même évite ce problème.</span>
+    </div>
+
+    <div class="section-title">Installation sur iPhone (Safari)</div>
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Même étape 1 ci-dessus pour copier le code depuis l'appli.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Ouvre une page dans Safari → Partager → « Ajouter aux favoris ».</span>
+    </div>
+    <div class="substep">
+      <span class="dot">3</span>
+      <span class="txt">Va dans tes Favoris, appui long sur celui que tu viens de créer → <strong>Modifier</strong>.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">4</span>
+      <span class="txt">Renomme-le « Auto-remplir Vinted ». Dans le champ adresse, tape <span class="mono">javascript:</span> puis colle le code juste après (Safari ne supprime pas le préfixe, contrairement à Chrome Android).</span>
+    </div>
+
+    <div class="section-title">À chaque annonce</div>
+    <div class="substep">
+      <span class="dot">1</span>
+      <span class="txt">Dans l'appli, génère ta fiche puis appuie sur <strong>« Copier pour auto-remplissage ⚡ »</strong>.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">2</span>
+      <span class="txt">Va sur Vinted, page « nouvelle annonce ». Ouvre tes favoris, tape sur <strong>« Auto-remplir Vinted »</strong>.</span>
+    </div>
+    <div class="substep">
+      <span class="dot">3</span>
+      <span class="txt">Un message t'indique combien de champs ont été remplis. Vérifie, ajoute tes photos, publie toi-même.</span>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <div class="section-title" id="faq" style="margin-top:36px;">Questions fréquentes / dépannage</div>
+
+  <details class="faq">
+    <summary>« Erreur API (404) : model is no longer available »</summary>
+    <div class="faq-body">
+      <p>Google retire régulièrement d'anciens modèles d'IA. Va dans <strong>Réglages → Modèle</strong> et choisis <strong>« Dernier modèle Flash (recommandé) »</strong> — cette option se met à jour automatiquement et évite ce problème à l'avenir.</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>« Erreur API (503) : high demand / UNAVAILABLE »</summary>
+    <div class="faq-body">
+      <p>Les serveurs Google sont temporairement saturés sur ce modèle, ça arrive surtout aux heures de pointe. L'appli réessaie déjà automatiquement plusieurs fois. Si ça persiste, attends une minute et retape sur « Générer », ou choisis un modèle moins demandé comme <strong>Gemini 3.1 Flash-Lite</strong> dans Réglages.</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Le favori « Auto-remplir Vinted » ne fait rien du tout</summary>
+    <div class="faq-body">
+      <p>C'est presque toujours parce que le préfixe <span class="mono">javascript:</span> a été supprimé par Chrome lors d'un copier-coller. Modifie le favori, efface tout, puis retape <span class="mono">javascript:</span> toi-même au clavier avant de coller le reste du code (voir étape 4 ci-dessus).</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Le favori affiche « 0/3 champs remplis »</summary>
+    <div class="faq-body">
+      <p>Vérifie que tu es bien sur la page où les champs titre/description/prix sont visibles à l'écran (pas une étape antérieure du formulaire Vinted, comme le choix de catégorie). Si le problème persiste, Vinted a peut-être changé la structure de sa page — utilise le copier-coller classique en attendant une mise à jour.</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Le favori dit que le presse-papier n'est pas reconnu</summary>
+    <div class="faq-body">
+      <p>Ça veut dire que tu n'as pas appuyé sur « Copier pour auto-remplissage ⚡ » dans l'appli juste avant, ou que tu as copié autre chose entre-temps (un numéro de téléphone, un message...). Retourne dans l'appli, appuie sur ce bouton, puis reviens directement sur Vinted sans rien copier d'autre.</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>J'ai fait une mise à jour de l'appli mais rien ne change</summary>
+    <div class="faq-body">
+      <p>C'est un souci de cache. Sur Android : appui long sur l'icône de l'appli → Infos sur l'appli → Stockage → Vider le cache et Effacer le stockage, puis rouvre l'appli. Sur iPhone : supprime l'icône de l'écran d'accueil et réinstalle-la (étape 2 de ce guide).</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>L'IA se trompe sur la marque, la taille ou l'état</summary>
+    <div class="faq-body">
+      <p>Normal, l'IA analyse uniquement ce qui est visible sur tes photos. Prends une photo nette de l'étiquette (marque + taille + composition) pour de meilleurs résultats, et corrige toujours à la main avant de publier — les champs sont modifiables.</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Mes photos ou mon historique ont disparu</summary>
+    <div class="faq-body">
+      <p>Tout est stocké uniquement sur ton téléphone, dans ce navigateur précis. Si tu as vidé le cache/stockage de l'appli (voir plus haut), l'historique est effacé avec — c'est le compromis d'un outil 100% gratuit sans serveur. Pense à copier les fiches importantes ailleurs si tu veux les garder longtemps.</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Puis-je utiliser l'appli sur plusieurs téléphones ?</summary>
+    <div class="faq-body">
+      <p>Oui, installe-la sur chaque appareil en suivant l'étape 2, avec la même clé Gemini ou une clé différente pour chacun (une clé par personne est recommandé). L'historique n'est en revanche pas partagé entre appareils.</p>
+    </div>
+  </details>
+
+</div>
+
+<footer>
+  Prêt à Vendre — outil gratuit, sans serveur, à usage personnel.<br>
+  <a href="./index.html" style="color:var(--accent-dark);">← Retour à l'appli</a>
+</footer>
+
+</body>
+</html>
