@@ -371,8 +371,6 @@ a{color:var(--accent-dark);}
 .onboard-card .btn{margin-top:16px;}
 .onboard-card a.btn{display:flex;}
 .device-instructions{margin-top:14px;}
-#deviceSegmented{flex-wrap:wrap;}
-#deviceSegmented button{flex:1 1 auto; min-width:90px;}
 
 /* ---------- callouts (info/warn/danger) ---------- */
 .callout{
@@ -394,7 +392,6 @@ a{color:var(--accent-dark);}
       <span class="dot active" data-slide="0"></span>
       <span class="dot" data-slide="1"></span>
       <span class="dot" data-slide="2"></span>
-      <span class="dot" data-slide="3"></span>
     </div>
 
     <!-- Slide 0 : bienvenue -->
@@ -408,7 +405,7 @@ a{color:var(--accent-dark);}
 
     <!-- Slide 1 : clé API (obligatoire) -->
     <div class="onboard-slide" data-slide="1">
-      <div class="onboard-tag">🔑 Étape 1 sur 3 — obligatoire</div>
+      <div class="onboard-tag">🔑 Étape 1 sur 2 — obligatoire</div>
       <h2>Ta clé Gemini gratuite</h2>
       <p>Chaque personne qui utilise l'appli doit avoir sa propre clé, gratuite, en 2 minutes. L'appli ne peut pas fonctionner sans.</p>
       <ol class="onboard-steps">
@@ -430,93 +427,15 @@ a{color:var(--accent-dark);}
       <button class="btn primary" data-next data-guarded="apikey">Continuer</button>
     </div>
 
-    <!-- Slide 2 : auto-remplissage Vinted avec choix d'appareil -->
+    <!-- Slide 2 : tutoriel -->
     <div class="onboard-slide" data-slide="2">
-      <div class="onboard-tag">⚡ Étape 2 sur 3 — recommandé</div>
-      <h2>Auto-remplissage Vinted</h2>
-      <p>Un favori de navigateur qui remplit tout seul le titre, la description et le prix sur Vinted. Choisis ton appareil pour voir les étapes exactes :</p>
-
-      <div class="segmented" id="deviceSegmented" style="flex-wrap:wrap;">
-        <button type="button" data-value="samsung">Samsung / Android</button>
-        <button type="button" data-value="xiaomi">Xiaomi</button>
-        <button type="button" data-value="iphone">iPhone</button>
-        <button type="button" data-value="windows">PC Windows</button>
-        <button type="button" data-value="mac">Mac</button>
-      </div>
-
-      <div class="device-instructions" data-device="samsung">
-        <ol class="onboard-steps numbered">
-          <li>Dans l'appli, va dans <strong>Réglages → Auto-remplissage Vinted</strong>, appuie sur <strong>« Copier le code »</strong>.</li>
-          <li>Ouvre Chrome, va sur n'importe quelle page → menu <strong>⋮</strong> → étoile pour l'ajouter aux favoris.</li>
-          <li>Ouvre tes Favoris (⋮ → Favoris) → ⋮ à côté du favori créé → <strong>Modifier</strong>.</li>
-          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
-          <li>Appuie dans le champ adresse, appui long → <strong>Tout sélectionner</strong> → supprime.</li>
-          <li><strong>Colle</strong> le code copié à l'étape 1, en une seule fois, sans rien taper au clavier avant ou après. Enregistre directement.</li>
-        </ol>
-      </div>
-
-      <div class="device-instructions" data-device="xiaomi" style="display:none;">
-        <ol class="onboard-steps numbered">
-          <li>Dans l'appli, va dans <strong>Réglages → Auto-remplissage Vinted</strong>, appuie sur <strong>« Copier le code »</strong>.</li>
-          <li>Sur Chrome (ou Mi Browser), ajoute n'importe quelle page à tes favoris via le menu du navigateur.</li>
-          <li>Ouvre tes favoris, modifie celui que tu viens de créer.</li>
-          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
-          <li>Sélectionne tout dans le champ adresse, supprime, puis <strong>colle</strong> le code copié à l'étape 1 d'un seul geste. Enregistre.</li>
-        </ol>
-        <div class="callout warn">
-          <span class="ic">⚠️</span>
-          <span>Sur certains navigateurs Xiaomi (Mi Browser), l'écran d'édition des favoris peut varier légèrement — cherche une icône crayon ou un appui long sur le favori pour trouver « Modifier ».</span>
-        </div>
-      </div>
-
-      <div class="device-instructions" data-device="iphone" style="display:none;">
-        <ol class="onboard-steps numbered">
-          <li>Dans l'appli, va dans <strong>Réglages → Auto-remplissage Vinted</strong>, appuie sur <strong>« Copier le code »</strong>.</li>
-          <li>Ouvre <strong>Safari</strong> (uniquement Safari), une page quelconque → icône Partager → <strong>« Ajouter aux favoris »</strong>.</li>
-          <li>Va dans tes Favoris, appui long sur celui créé → <strong>Modifier</strong>.</li>
-          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>.</li>
-          <li>Sélectionne tout dans le champ adresse, supprime, puis colle le code copié à l'étape 1. Enregistre.</li>
-        </ol>
-      </div>
-
-      <div class="device-instructions" data-device="windows" style="display:none;">
-        <ol class="onboard-steps numbered">
-          <li>Sur ton ordi, ouvre l'appli dans Chrome ou Edge, copie le code dans <strong>Réglages → Auto-remplissage Vinted</strong>.</li>
-          <li>Ouvre le gestionnaire de favoris : <span class="mono">Ctrl+Shift+O</span>.</li>
-          <li>Clic droit dans la liste → <strong>« Ajouter un nouveau favori »</strong>.</li>
-          <li>Nom : <strong>« Auto-remplir Vinted »</strong>. Dans le champ URL, colle directement le code copié.</li>
-          <li>Enregistre, puis épingle-le dans ta barre de favoris pour l'avoir sous la main sur Vinted.</li>
-        </ol>
-      </div>
-
-      <div class="device-instructions" data-device="mac" style="display:none;">
-        <ol class="onboard-steps numbered">
-          <li>Copie le code dans <strong>Réglages → Auto-remplissage Vinted</strong>.</li>
-          <li>Dans Safari ou Chrome, ajoute n'importe quelle page aux favoris (<span class="mono">Cmd+D</span>).</li>
-          <li>Ouvre l'éditeur de favoris, clic droit sur celui créé → <strong>Modifier l'adresse</strong>.</li>
-          <li>Renomme-le <strong>« Auto-remplir Vinted »</strong>. Colle directement le code copié dans le champ adresse.</li>
-        </ol>
-      </div>
-
-      <div class="callout warn" style="margin-top:14px;">
-        <span class="ic">💡</span>
-        <span>Le code copié contient déjà tout, y compris <span class="mono">javascript:</span> au début — colle-le en un seul geste, sans taper aucune touche avant ou après. Si le favori ouvre plus tard une page bizarre comme « javascript.com », c'est que le clavier a autocomplété le texte : recommence en collant d'un coup, sans laisser l'auto-correction agir.</span>
-      </div>
-
-      <div class="hint" style="margin-top:12px;">Tu peux aussi faire ça plus tard depuis Réglages, et te contenter du copier-coller classique en attendant — l'appli fonctionne très bien sans.</div>
-
-      <button class="btn primary" data-next>Continuer</button>
-    </div>
-
-    <!-- Slide 3 : tutoriel -->
-    <div class="onboard-slide" data-slide="3">
-      <div class="onboard-tag">📸 Étape 3 sur 3</div>
+      <div class="onboard-tag">📸 Étape 2 sur 2</div>
       <h2>Comment ça marche</h2>
       <ol class="onboard-steps numbered">
         <li><strong>Photographie</strong> ton article dans l'onglet Nouveau (plusieurs angles = meilleure fiche).</li>
         <li><strong>Génère la fiche</strong> : titre, description, catégorie, prix et tags arrivent en quelques secondes.</li>
         <li><strong>Vérifie et corrige</strong> — l'IA peut se tromper sur la marque, l'état ou un défaut, relis toujours avant de publier.</li>
-        <li><strong>Importe dans Vinted</strong> : copier-coller classique, ou l'auto-remplissage ⚡ pour remplir titre/description/prix en un tap.</li>
+        <li><strong>Importe dans Vinted</strong> : copie le titre et la description, colle-les dans les champs de l'annonce.</li>
         <li>Ajoute tes photos et <strong>publie toi-même</strong> — ce dernier geste reste toujours manuel.</li>
       </ol>
       <p class="hint">Un guide complet et détaillé reste accessible à tout moment depuis Réglages, si jamais tu as un doute.</p>
@@ -609,8 +528,7 @@ a{color:var(--accent-dark);}
 
       <hr class="divider">
 
-      <button class="btn primary" id="autofillBtn">Copier pour auto-remplissage ⚡</button>
-      <div class="hint" style="margin-top:6px;">Puis va sur Vinted → nouvelle annonce → appuie sur ton favori « Auto-remplir » (à installer une fois, voir Réglages).</div>
+      <button class="btn primary" id="copyTitleBtn">Copier le titre</button>
       <button class="btn accent" id="copyBtn">Copier la fiche en texte</button>
       <button class="btn ghost" id="openVintedBtn">Ouvrir Vinted pour publier</button>
       <button class="btn ghost" id="saveDraftBtn">Enregistrer dans l'historique</button>
@@ -662,6 +580,7 @@ a{color:var(--accent-dark);}
         <button type="button" data-value="gemini-3.5-flash">Gemini 3.5 Flash</button>
         <button type="button" data-value="gemini-3.1-flash-lite">Gemini 3.1 Flash-Lite (plus rapide)</button>
       </div>
+      <div class="hint">Le choix est enregistré immédiatement, pas besoin d'appuyer sur Enregistrer.</div>
     </div>
 
     <div class="field">
@@ -671,6 +590,12 @@ a{color:var(--accent-dark);}
         <button type="button" data-value="chaleureux et détaillé, met en avant la qualité">Chaleureux</button>
         <button type="button" data-value="direct et minimaliste, quelques mots clés">Minimaliste</button>
       </div>
+    </div>
+
+    <div class="field">
+      <label>Format de réponse de l'IA (optionnel)</label>
+      <textarea id="customInstructions" placeholder="Ex : présente la description sous forme de liste à puces (état, défauts, mesures) plutôt qu'en paragraphe. Ou : structure en 2 courts paragraphes. Ou : ajoute toujours une ligne « pas d'échange » à la fin." style="min-height:80px;"></textarea>
+      <div class="hint">Dis à l'IA comment structurer sa réponse : en liste à puces, en paragraphe, avec ou sans emojis, avec des mentions systématiques... Ce texte est ajouté à chaque génération, en plus du ton choisi ci-dessus.</div>
     </div>
 
     <button class="btn primary" id="saveSettingsBtn">Enregistrer</button>
@@ -707,47 +632,6 @@ a{color:var(--accent-dark);}
         <div class="row-content">
           <div class="row-label">Effacer toutes mes données</div>
         </div>
-      </div>
-    </div>
-
-    <div class="section-title">Auto-remplissage Vinted ⚡ <span style="text-transform:none; opacity:.7;">(bêta)</span></div>
-    <div class="hint" style="margin-bottom:14px;">
-      Un favori de navigateur qui remplit tout seul le titre, la description et le prix sur la page « nouvelle annonce » de Vinted.
-      Toi seul ajoutes les photos et cliques sur Publier.
-      Si Vinted change son site, le copier-coller classique reste toujours disponible en secours.
-    </div>
-
-    <div class="field">
-      <label>1. Copie ce code</label>
-      <textarea id="bookmarkletCode" readonly style="min-height:70px; font-family:'IBM Plex Mono',monospace; font-size:11px;"></textarea>
-      <button class="btn small ghost" id="copyBookmarkletBtn" style="margin-top:8px; width:100%;">Copier le code</button>
-      <div class="hint">
-        Ce code contient déjà tout, y compris le début <span class="mono">javascript:</span> — colle-le tel quel, en une seule fois, sans rien taper à la main.
-      </div>
-    </div>
-
-    <div class="field">
-      <label>2. Installe-le une seule fois</label>
-      <div class="hint">
-        <strong>Sur Android (Chrome) :</strong><br>
-        1. Ouvre n'importe quelle page → menu ⋮ → Favoris (icône étoile) → il s'ajoute.<br>
-        2. Va dans Favoris → appuie sur les ⋮ à côté → Modifier.<br>
-        3. Renomme-le « Auto-remplir Vinted ».<br>
-        4. Appuie dans le champ adresse, sélectionne tout (appui long → Tout sélectionner) et supprime.<br>
-        5. <strong>Colle</strong> directement le code copié à l'étape 1, en une seule fois. Ne tape rien au clavier avant ou pendant, pour éviter que la correction automatique modifie le texte.<br>
-        6. Enregistre <strong>sans rouvrir le clavier</strong> après le collage.<br><br>
-        <strong>Sur iPhone (Safari) :</strong> ouvre une page → partage → « Ajouter aux favoris ». Modifie-le (appui long → Modifier), renomme-le, colle le code directement dans le champ adresse.
-      </div>
-      <div class="callout warn" style="margin-top:10px;">
-        <span class="ic">⚠️</span>
-        <span>Si le favori ouvre une page comme « javascript.com » au lieu de faire son travail, c'est que le clavier a autocomplété ou modifié le texte pendant la saisie. Refais l'étape en collant le code d'un seul geste, sans taper aucune touche avant/après, et sans laisser l'auto-complétion du clavier suggérer un site.</span>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>3. À chaque annonce</label>
-      <div class="hint">
-        Dans l'onglet Nouveau, appuie sur <strong>« Copier pour auto-remplissage »</strong> → va sur Vinted, page nouvelle annonce → ouvre tes favoris → tape sur <strong>« Auto-remplir Vinted »</strong>. Les champs se remplissent, tu vérifies, tu ajoutes les photos, tu publies.
       </div>
     </div>
 
@@ -899,8 +783,15 @@ function initSegmented(id, defaultValue, onChange){
   });
   return { setValue, getValue };
 }
-const modelControl = initSegmented('modelSegmented', 'gemini-flash-latest');
-const toneControl = initSegmented('toneSegmented', 'clair et efficace, orienté vente rapide');
+// Modèle et ton s'enregistrent immédiatement au clic, pas besoin du bouton Enregistrer.
+const modelControl = initSegmented('modelSegmented', 'gemini-flash-latest', (val)=>{
+  store.set('model', val);
+  toast('Modèle mis à jour');
+});
+const toneControl = initSegmented('toneSegmented', 'clair et efficace, orienté vente rapide', (val)=>{
+  store.set('tone', val);
+  toast('Ton mis à jour');
+});
 
 // ---------- settings load/save ----------
 const DEPRECATED_MODELS = ['gemini-2.5-flash','gemini-2.0-flash','gemini-2.0-flash-lite','gemini-1.5-flash','gemini-1.5-pro'];
@@ -913,6 +804,7 @@ function loadSettings(){
   }
   modelControl.setValue(model);
   toneControl.setValue(store.get('tone', 'clair et efficace, orienté vente rapide'));
+  $('customInstructions').value = store.get('customInstructions', '');
 }
 loadSettings();
 
@@ -925,6 +817,7 @@ $('saveSettingsBtn').addEventListener('click', ()=>{
   store.set('apiKey', $('apiKeyInput').value.trim());
   store.set('model', modelControl.getValue());
   store.set('tone', toneControl.getValue());
+  store.set('customInstructions', $('customInstructions').value.trim());
   toast('Réglages enregistrés');
 });
 
@@ -941,12 +834,6 @@ $('clearAllBtn').addEventListener('click', ()=>{
 const onboard = $('onboard');
 let onboardSlide = 0;
 const totalSlides = document.querySelectorAll('.onboard-slide').length;
-const deviceControl = initSegmented('deviceSegmented', 'samsung', (val)=>{
-  document.querySelectorAll('.device-instructions').forEach(el=>{
-    el.style.display = el.dataset.device === val ? 'block' : 'none';
-  });
-});
-deviceControl.setValue('samsung');
 
 function showOnboardSlide(i){
   onboardSlide = i;
@@ -1069,7 +956,7 @@ function renderThumbs(){
 }
 
 // ---------- Gemini call ----------
-const PROMPT = (tone) => `Tu es un expert en petites annonces sur Vinted en France. Analyse les photos d'un article à vendre et réponds UNIQUEMENT avec un objet JSON valide, sans texte autour, sans balises markdown, au format exact suivant :
+const PROMPT = (tone, customInstructions) => `Tu es un expert en petites annonces sur Vinted en France. Analyse les photos d'un article à vendre et réponds UNIQUEMENT avec un objet JSON valide, sans texte autour, sans balises markdown, au format exact suivant :
 {
   "title": "titre accrocheur, 60 caractères max, en français",
   "category": "catégorie précise (ex: Vêtements femme > Robes)",
@@ -1078,11 +965,24 @@ const PROMPT = (tone) => `Tu es un expert en petites annonces sur Vinted en Fran
   "condition": "une valeur parmi: Neuf avec étiquette, Neuf sans étiquette, Très bon état, Bon état, Satisfaisant",
   "color": "couleur principale",
   "material": "matière si identifiable, sinon chaîne vide",
-  "description": "description complète et vendeuse de 3 à 6 phrases en français, ton ${tone}, mentionne l'état, les défauts visibles éventuels, les mesures si déductibles, sans jamais inventer une marque ou un défaut que tu ne vois pas",
+  "description": "description complète et vendeuse de 3 à 6 phrases en français, mentionne l'état, les défauts visibles éventuels, les mesures si déductibles, sans jamais inventer une marque ou un défaut que tu ne vois pas",
   "suggested_price_eur": nombre entier réaliste pour le marché Vinted français d'occasion,
   "hashtags": ["5 à 8 mots-clés pertinents sans le symbole #"]
 }
-Sois honnête : si tu ne peux pas déterminer un champ avec confiance, laisse une chaîne vide plutôt que d'inventer.`;
+
+CONSIGNE DE TON IMPORTANTE — applique-la strictement au champ "description" et à l'esprit du "title" :
+${tone}
+
+Sois honnête : si tu ne peux pas déterminer un champ avec confiance, laisse une chaîne vide plutôt que d'inventer.${customInstructions ? `
+
+FORMAT ET CONSIGNES PERSONNALISÉES DE L'UTILISATEUR — respecte-les scrupuleusement pour la structure et le style du champ "description" (liste à puces, paragraphes, mentions systématiques, etc.), elles priment sur le style par défaut. Le champ "description" reste une chaîne de texte simple : utilise des retours à la ligne ("\\n") et des tirets ("-") si une liste est demandée :
+${customInstructions}` : ''}`;
+
+const TONE_LABELS = {
+  'clair et efficace, orienté vente rapide': 'Écris dans un style clair, direct et efficace, orienté vers une vente rapide. Phrases courtes, concrètes, sans fioritures.',
+  'chaleureux et détaillé, met en avant la qualité': 'Écris dans un style chaleureux et détaillé, qui met en valeur la qualité et le charme de l\'article, avec un ton engageant et personnel.',
+  'direct et minimaliste, quelques mots clés': 'Écris de façon minimaliste : quelques mots-clés et informations essentielles, phrases très courtes, sans blabla.'
+};
 
 function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
@@ -1113,11 +1013,12 @@ async function callGemini(){
     return;
   }
   const model = store.get('model', 'gemini-flash-latest');
-  const tone = store.get('tone', 'clair et efficace, orienté vente rapide');
+  const tone = TONE_LABELS[store.get('tone', 'clair et efficace, orienté vente rapide')] || store.get('tone');
+  const customInstructions = store.get('customInstructions', '');
 
   $('analyzeBtn').disabled = true;
 
-  const parts = [{ text: PROMPT(tone) }];
+  const parts = [{ text: PROMPT(tone, customInstructions) }];
   state.photos.forEach(p => parts.push({ inline_data: { mime_type: p.mime, data: p.base64 } }));
 
   const maxAttempts = 3;
@@ -1243,7 +1144,6 @@ function buildListingText(){
 
 ${$('f-description').value}
 
-Catégorie : ${$('f-category').value}
 Marque : ${$('f-brand').value || '—'}
 Taille : ${$('f-size').value || '—'}
 État : ${$('f-condition').value}
@@ -1257,43 +1157,9 @@ $('copyBtn').addEventListener('click', async ()=>{
   toast('Fiche copiée — colle-la dans Vinted');
 });
 
-// ---------- auto-remplissage (bookmarklet) ----------
-const AUTOFILL_MARKER = '##VINTEDAI##';
-
-$('autofillBtn').addEventListener('click', async ()=>{
-  // La catégorie est découpée en niveaux ("Vêtements femme > Robes" -> ["Vêtements femme","Robes"])
-  // pour permettre à une automatisation externe (ex: MacroDroid) de taper les écrans
-  // de sélection de catégorie de Vinted un niveau après l'autre.
-  const categoryRaw = $('f-category').value || '';
-  const categoryLevels = categoryRaw.split('>').map(s => s.trim()).filter(Boolean);
-  const payload = {
-    title: $('f-title').value,
-    description: $('f-description').value,
-    price: $('f-price').textContent.trim(),
-    brand: $('f-brand').value,
-    size: $('f-size').value,
-    category: categoryRaw,
-    categoryLevels: categoryLevels
-  };
-  const text = AUTOFILL_MARKER + JSON.stringify(payload);
-  try{
-    await navigator.clipboard.writeText(text);
-    toast('Copié ⚡ — va sur Vinted et tape ton favori "Auto-remplir Vinted"');
-  }catch(e){
-    toast('Impossible de copier automatiquement, utilise "Copier la fiche en texte".');
-  }
-});
-
-// Code source du bookmarklet minifié (celui qui tourne sur la page Vinted)
-// Version compacte pour rester sous la limite ~2000 caractères des favoris Android.
-const BOOKMARKLET_SOURCE = `!async function(){var e,t="${AUTOFILL_MARKER}";try{e=await navigator.clipboard.readText()}catch(e){return void alert("Autorise l'acces au presse-papier pour ce site, puis retape sur le favori.")}var r=e.indexOf(t);if(-1!==r){var i;try{i=JSON.parse(e.slice(r+t.length))}catch(e){return void alert("Donnees illisibles.")}var a=0,l=c(["title","titre"]);l&&(s(l,i.title),a++);var n=c(["description"]);n&&(s(n,i.description),a++);var o=c(["price","prix"]);o&&(s(o,String(i.price)),a++),alert(a+"/3 champs remplis. Verifie, ajoute tes photos, publie toi-meme.")}else alert("Presse-papier non reconnu. Utilise d'abord le bouton Copier pour auto-remplissage dans l'appli.");function s(e,t){var r=Object.getPrototypeOf(e),i=Object.getOwnPropertyDescriptor(r,"value");i&&i.set?i.set.call(e,t):e.value=t,e.dispatchEvent(new Event("input",{bubbles:!0})),e.dispatchEvent(new Event("change",{bubbles:!0}))}function c(e){for(var t=Array.prototype.slice.call(document.querySelectorAll("input, textarea")),r=0;r<t.length;r++){for(var i=t[r],a=[i.name,i.id,i.placeholder,i.getAttribute("aria-label")].join(" ").toLowerCase(),l=0;l<e.length;l++)if(-1!==a.indexOf(e[l]))return i;var n=i.closest?i.closest("label"):i.id?document.querySelector('label[for="'+i.id+'"]'):null;if(n)for(var o=n.textContent.toLowerCase(),s=0;s<e.length;s++)if(-1!==o.indexOf(e[s]))return i}return null}}();`;
-
-const BOOKMARKLET_FULL = 'javascript:' + encodeURIComponent(BOOKMARKLET_SOURCE);
-$('bookmarkletCode').value = BOOKMARKLET_FULL;
-
-$('copyBookmarkletBtn').addEventListener('click', async ()=>{
-  await navigator.clipboard.writeText(BOOKMARKLET_FULL);
-  toast('Code copié — colle-le en entier dans le favori');
+$('copyTitleBtn').addEventListener('click', async ()=>{
+  await navigator.clipboard.writeText($('f-title').value);
+  toast('Titre copié');
 });
 
 $('openVintedBtn').addEventListener('click', async ()=>{
@@ -1352,7 +1218,7 @@ function renderHistory(){
     });
     card.querySelector('[data-act="copy"]').addEventListener('click', async (e)=>{
       e.stopPropagation();
-      const text = `${item.title}\n\n${item.description}\n\nCatégorie : ${item.category}\nMarque : ${item.brand || '—'}\nTaille : ${item.size || '—'}\nÉtat : ${item.condition}\nPrix : ${item.price} €\n\n${(item.tags||[]).join(' ')}`;
+      const text = `${item.title}\n\n${item.description}\n\nMarque : ${item.brand || '—'}\nTaille : ${item.size || '—'}\nÉtat : ${item.condition}\nPrix : ${item.price} €\n\n${(item.tags||[]).join(' ')}`;
       await navigator.clipboard.writeText(text);
       toast('Fiche copiée');
     });
